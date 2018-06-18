@@ -1,0 +1,4 @@
+module.name: smartmodule
+module.description: a smart description
+module.author: Lossless GmbH
+module.license: MIT
