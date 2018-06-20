@@ -3,6 +3,7 @@
     "npmGlobalTools": [
       "@gitzone/npmts",
       "ts-node"
-    ]
+    ],
+    "npmAccessLevel": "public"
   }
 }
