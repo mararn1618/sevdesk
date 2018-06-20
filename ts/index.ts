@@ -1,3 +1,2 @@
-import * as plugins from './sevdesk.plugins';
-
-export let standardExport = 'Hi there! :) This is an exported string';
+export * from './sevdesk.classes.account';
+export * from './sevdesk.classes.contact';

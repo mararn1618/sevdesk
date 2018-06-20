@@ -1,4 +1,5 @@
-const removeme = {};
+import * as smartrequest from '@pushrocks/smartrequest';
+
 export {
-  removeme
+  smartrequest
 }
