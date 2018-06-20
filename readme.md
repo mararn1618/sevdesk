@@ -11,8 +11,6 @@ mojoio integration package for sevdesk
 [![build status](https://GitLab.com/mojoio/sevdesk/badges/master/build.svg)](https://GitLab.com/mojoio/sevdesk/commits/master)
 [![coverage report](https://GitLab.com/mojoio/sevdesk/badges/master/coverage.svg)](https://GitLab.com/mojoio/sevdesk/commits/master)
 [![npm downloads per month](https://img.shields.io/npm/dm/@mojoio/sevdesk.svg)](https://www.npmjs.com/package/@mojoio/sevdesk)
-[![bitHound Dependencies](https://www.bithound.io/github/mojoio/sevdesk/badges/dependencies.svg)](https://www.bithound.io/github/mojoio/sevdesk/master/dependencies/npm)
-[![bitHound Code](https://www.bithound.io/github/mojoio/sevdesk/badges/code.svg)](https://www.bithound.io/github/mojoio/sevdesk)
 [![Known Vulnerabilities](https://snyk.io/test/npm/@mojoio/sevdesk/badge.svg)](https://snyk.io/test/npm/@mojoio/sevdesk)
 [![TypeScript](https://img.shields.io/badge/TypeScript-2.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
 [![node](https://img.shields.io/badge/node->=%206.x.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
