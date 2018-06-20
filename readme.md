@@ -14,7 +14,7 @@ mojoio integration package for sevdesk
 [![Known Vulnerabilities](https://snyk.io/test/npm/@mojoio/sevdesk/badge.svg)](https://snyk.io/test/npm/@mojoio/sevdesk)
 [![TypeScript](https://img.shields.io/badge/TypeScript-2.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
 [![node](https://img.shields.io/badge/node->=%206.x.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
-[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-prettier-7B1FA2.svg)](http://prettier.io/)
 
 ## Usage
 Use TypeScript for best in class instellisense.
