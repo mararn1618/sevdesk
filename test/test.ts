@@ -13,7 +13,7 @@ tap.test('should create a sevdeskAccount', async () => {
   expect(sevDeskAccount).to.be.instanceof(sevdesk.SevdeskAccount);
 });
 
-tap.test('should create contact', async () => {
+tap.test('should create contact with type person', async () => {
   sevDeskContact = new sevdesk.Contact({
     title: 'Doctor',
     customerNumber: '1000',
@@ -27,9 +27,25 @@ tap.test('should create contact', async () => {
       country: 'USA',
       houseNumber: '6'
     },
-    description: 'hi'
+    description: 'Toni is an entrepreneur and a natural Person'
   });
   await sevDeskContact.save(sevDeskAccount);
+
+  tap.test('should create contact with type company', async () => {
+    sevDeskContact = new sevdesk.Contact({
+      customerNumber: '1001',
+      name: 'Start Technologies',
+      type: 'company',
+      address: {
+        streetName: 'Stark Industries Loop',
+        postalCode: '10000',
+        city: 'New York',
+        country: 'USA',
+        houseNumber: '7'
+      },
+      description: 'Stark Technologies is a company'
+    });
+    await sevDeskContact.save(sevDeskAccount);
 })
 
 tap.start();
