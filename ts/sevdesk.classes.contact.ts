@@ -68,6 +68,6 @@ export class Contact implements IContact {
       }
     }
     console.log(payload);
-    sevdeskAccountArg.request("POST", "/Contact", payload);
+    await sevdeskAccountArg.request("POST", "/Contact", payload);
   }
 }
