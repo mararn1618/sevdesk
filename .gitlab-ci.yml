@@ -134,8 +134,7 @@ windowsCompatibility:
   image: stefanscherer/node-windows:10-build-tools
   stage: metadata
   script:
-  - npmci npm install
-  - npmci npm test
+  - npm install; npm test
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - windows

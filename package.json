@@ -19,6 +19,6 @@
   },
   "dependencies": {
     "@pushrocks/smartrequest": "^1.0.15",
-    "@tsclass/tsclass": "^1.0.27"
+    "@tsclass/tsclass": "^1.0.28"
   }
 }
