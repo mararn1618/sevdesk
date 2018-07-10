@@ -41,7 +41,7 @@ certainContact.name = 'My New Name';
 certainContact.save(sevdeskAccount);
 ```
 
-## Milstones
+## Milestones
 v2 - 10.08.2018 - PaymentAccount class, ExpenseAccount class
 
 
