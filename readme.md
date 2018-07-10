@@ -41,6 +41,10 @@ certainContact.name = 'My New Name';
 certainContact.save(sevdeskAccount);
 ```
 
+## Milstones
+v2 - 10.08.2018 - PaymentAccount class, ExpenseAccount class
+
+
 For further information read the linked docs at the top of this README.
 
 > MIT licensed | **&copy;** [Lossless GmbH](https://lossless.gmbh)
