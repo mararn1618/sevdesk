@@ -33,6 +33,9 @@ The basic concept of this library consists of classes that expose static functio
 * sevdesk.Contact -> handles contacts within sevdesk
 * sevdesk.Expense -> handles expenses within sevdesk
 
+Every class exposes static functions to **retrieve information from sevdesk**.
+Every instance of an class exposes a .save(myAccountInstanceHere) function to **store information back to sevdesk**.
+
 ```typescript
 import * as sevdesk from '@mojoio/sevdesk';
 
