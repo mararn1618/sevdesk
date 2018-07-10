@@ -25,6 +25,14 @@ Use TypeScript for best in class instellisense.
 
 This package aims to be a fully typed (TypeScript), easy to use unofficial nodejs API package for sevdesk.com.
 
+The basic concept of this library consists of classes that expose static functions (factories) for retrieving instances from the sevdesk API while abstracting enough to not needing to know the specifics of that API.
+
+**Available Classes**
+
+* sevdesk.Account -> handles the basic Account setup for authentication
+* sevdesk.Contact -> handles contacts within sevdesk
+* sevdesk.Expense -> handles expenses within sevdesk
+
 ```typescript
 import * as sevdesk from '@mojoio/sevdesk';
 
