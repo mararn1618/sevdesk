@@ -53,4 +53,15 @@ tap.test('should create contact with type company', async () => {
   await sevDeskContact.save(sevDeskAccount);
 });
 
+tap.test('should create an expense with PDF file', async () => {
+  const expense = new sevdesk.Expense({
+    accountRef: null,
+    voucherFile: null,
+    contactRef: null,
+    expenseItems: [
+      
+    ]
+  })
+});
+
 tap.start();

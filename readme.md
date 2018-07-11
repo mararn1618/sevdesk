@@ -27,6 +27,8 @@ This package aims to be a fully typed (TypeScript), easy to use unofficial nodej
 
 The basic concept of this library consists of classes that expose static functions (factories) for retrieving instances from the sevdesk API while abstracting enough to not needing to know the specifics of that API.
 
+Typings and constructor options follow the world view of @tsclass/tsclass, a package that exposes generalized interfaces for real world objects.
+
 **Available Classes**
 
 * sevdesk.Account -> handles the basic Account setup for authentication

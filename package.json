@@ -13,12 +13,12 @@
     "format": "(gitzone format)"
   },
   "devDependencies": {
-    "@gitzone/tsrun": "^1.0.5",
+    "@gitzone/tsrun": "^1.1.2",
     "qenv": "^1.1.7",
-    "tapbundle": "^2.0.0"
+    "tapbundle": "^2.0.2"
   },
   "dependencies": {
     "@pushrocks/smartrequest": "^1.0.15",
-    "@tsclass/tsclass": "^1.0.28"
+    "@tsclass/tsclass": "^1.0.32"
   }
 }

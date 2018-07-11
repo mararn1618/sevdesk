@@ -19,6 +19,7 @@ export class Contact implements IContact {
    */
   static async getContacts(sevdeskAccount: SevdeskAccount) {
     const result = await sevdeskAccount.request('GET', '/Contacts', {});
+    // TODO: propagate this to the class
   }
 
   /**
