@@ -10,11 +10,14 @@ export class Expense implements IExpense {
   accountRef: string;
 
   /**
-   * 
-   * @param expenseOptions 
+   * the contructor for an Expense
    */
-  constructor(expenseOptions: IExpense) {
-
+  constructor(expenseObjectArg: IExpense) {
+    for (let key in expenseObjectArg) {
+      if (expenseObjectArg[key]) {
+        this[key] = expenseObjectArg[key];
+      }
+    }
   }
 
   /**
