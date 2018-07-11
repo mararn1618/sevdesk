@@ -1,6 +1,6 @@
 import { SevdeskAccount } from '../sevdesk.classes.account';
 
-export let getCountryIdByCountryName = async (sevdeskAccount: SevdeskAccount, countryNameArg: string) => {
+export const getCountryIdByCountryName = async (sevdeskAccount: SevdeskAccount, countryNameArg: string) => {
   const response = await sevdeskAccount.request('GET', `/StaticCountry`);
   const countryArrray = response.objects;
 
@@ -13,6 +13,6 @@ export let getCountryIdByCountryName = async (sevdeskAccount: SevdeskAccount, co
   }
 }
 
-export let getCountryNameByCountryId = async (sevdeskAccount: SevdeskAccount) => {
+export const getCountryNameByCountryId = async (sevdeskAccount: SevdeskAccount) => {
   
 }
