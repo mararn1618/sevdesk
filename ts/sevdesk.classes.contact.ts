@@ -9,7 +9,7 @@ import {
   TContactType
 } from '@tsclass/tsclass';
 
-import * as contactHelpers from './helpers/contact';
+import * as contactHelpers from './helpers/country';
 import { ENGINE_METHOD_DIGESTS } from 'constants';
 
 export class Contact implements IContact {

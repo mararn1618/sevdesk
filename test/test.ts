@@ -1,5 +1,5 @@
 import { expect, tap } from 'tapbundle';
-import * as sevdesk from '../ts/index';
+import * as sevdesk from '../ts';
 
 import * as qenv from 'qenv';
 
@@ -59,7 +59,7 @@ tap.test('should create an expense with PDF file', async () => {
     voucherFile: null,
     contactRef: null,
     expenseItems: [
-      
+
     ]
   })
 });
