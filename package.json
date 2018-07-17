@@ -8,8 +8,8 @@
   "author": "Lossless GmbH",
   "license": "UNLICENSED",
   "scripts": {
-    "test": "tsrun test/test.ts",
-    "build": "npmts",
+    "test": "(tsrun test/test.ts)",
+    "build": "(npmts --notest)",
     "format": "(gitzone format)"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import { expect, tap } from '@pushrocks/tapbundle';
-import * as sevdesk from '../ts';
+import * as sevdesk from '../ts/index';
 
 import * as qenv from 'qenv';
 
