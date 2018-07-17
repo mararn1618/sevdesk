@@ -16,9 +16,9 @@ export class SevdeskAccount {
     const sevdeskHeaders = {
       Authorization: this.authToken,
       accept: 'application/json'
-    }
-    if(payloadArg) {
-      sevdeskHeaders['Content-Type'] = 'application/json'
+    };
+    if (payloadArg) {
+      sevdeskHeaders['Content-Type'] = 'application/json';
     }
 
     const response = await plugins.smartrequest.request(`${this.apiDomain}${routeArg}`, {
@@ -26,7 +26,7 @@ export class SevdeskAccount {
       headers: sevdeskHeaders,
       requestBody: payloadArg
     });
-    if(response.statusCode !== 200) {
+    if (response.statusCode !== 200) {
       // console.log(response.body);
     }
     return response.body;

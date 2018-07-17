@@ -58,10 +58,8 @@ tap.test('should create an expense with PDF file', async () => {
     accountRef: null,
     voucherFile: null,
     contactRef: null,
-    expenseItems: [
-
-    ]
-  })
+    expenseItems: []
+  });
 });
 
 tap.start();

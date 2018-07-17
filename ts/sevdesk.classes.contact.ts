@@ -41,7 +41,7 @@ export class Contact implements IContact {
   address: IAddress;
   phone: string;
   email: string;
-  
+
   description: string;
 
   // financeData
@@ -87,32 +87,47 @@ export class Contact implements IContact {
       }
     };
     const contactResponseJson = await sevdeskAccountArg.request('POST', '/Contact', payload);
-    this.sevdeskId = contactResponseJson.objects.id
+    this.sevdeskId = contactResponseJson.objects.id;
     // add address
     if (this.address) {
-      const addressResponseJson = await sevdeskAccountArg.request('POST', `/Contact/${this.sevdeskId}/addAddress`, {
-        street: this.address.streetName,
-        city: this.address.city,
-        zip: this.address.postalCode,
-        country: await contactHelpers.getCountryIdByCountryName(sevdeskAccountArg, this.address.country),
-        // category: 'main'
-      });
+      const addressResponseJson = await sevdeskAccountArg.request(
+        'POST',
+        `/Contact/${this.sevdeskId}/addAddress`,
+        {
+          street: this.address.streetName,
+          city: this.address.city,
+          zip: this.address.postalCode,
+          country: await contactHelpers.getCountryIdByCountryName(
+            sevdeskAccountArg,
+            this.address.country
+          )
+          // category: 'main'
+        }
+      );
     }
 
     // add email
-    if(this.email) {
-      const emailResponseJson = await sevdeskAccountArg.request('POST', `/Contact/${this.sevdeskId}/addEmail`, {
-        key: 1,
-        value: this.email
-      });
+    if (this.email) {
+      const emailResponseJson = await sevdeskAccountArg.request(
+        'POST',
+        `/Contact/${this.sevdeskId}/addEmail`,
+        {
+          key: 1,
+          value: this.email
+        }
+      );
     }
 
     // add phone
-    if(this.phone) {
-      const phoneResponseJson = await sevdeskAccountArg.request('POST', `/Contact/${this.sevdeskId}/addPhone`, {
-        key: 1,
-        value: this.phone
-      });
+    if (this.phone) {
+      const phoneResponseJson = await sevdeskAccountArg.request(
+        'POST',
+        `/Contact/${this.sevdeskId}/addPhone`,
+        {
+          key: 1,
+          value: this.phone
+        }
+      );
     }
   }
 }

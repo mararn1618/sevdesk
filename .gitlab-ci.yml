@@ -117,8 +117,9 @@ pages:
   image: hosttoday/ht-docker-node:npmci
   stage: metadata
   script:
-    - npmci command npm install -g npmpage
-    - npmci command npmpage
+    - npmci command npm install -g typedoc typescript
+    - npmci npm install
+    - npmci command typedoc --module "commonjs" --target "ES2016" --out public/ ts/
   tags:
     - docker
     - notpriv
@@ -134,7 +135,7 @@ windowsCompatibility:
   image: stefanscherer/node-windows:10-build-tools
   stage: metadata
   script:
-  - npm install; npm test
+  - npm install & npm test
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - windows

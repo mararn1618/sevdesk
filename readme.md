@@ -31,9 +31,9 @@ Typings and constructor options follow the world view of @tsclass/tsclass, a pac
 
 **Available Classes**
 
-* sevdesk.Account -> handles the basic Account setup for authentication
-* sevdesk.Contact -> handles contacts within sevdesk
-* sevdesk.Expense -> handles expenses within sevdesk
+- sevdesk.Account -> handles the basic Account setup for authentication
+- sevdesk.Contact -> handles contacts within sevdesk
+- sevdesk.Expense -> handles expenses within sevdesk
 
 Every class exposes static functions to **retrieve information from sevdesk**.
 Every instance of an class exposes a .save(myAccountInstanceHere) function to **store information back to sevdesk**.
@@ -55,8 +55,8 @@ certainContact.save(sevdeskAccount);
 ```
 
 ## Milestones
-v2 - 10.08.2018 - PaymentAccount class, ExpenseAccount class
 
+v2 - 10.08.2018 - PaymentAccount class, ExpenseAccount class
 
 For further information read the linked docs at the top of this README.
 

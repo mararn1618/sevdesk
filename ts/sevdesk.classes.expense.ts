@@ -4,7 +4,7 @@ import { SevdeskAccount } from './sevdesk.classes.account';
 import { IExpense, IExpenseItem } from '@tsclass/tsclass';
 
 export class Expense implements IExpense {
-  expenseItems: IExpenseItem[]
+  expenseItems: IExpenseItem[];
   voucherFile: any;
   contactRef: string;
   accountRef: string;
@@ -25,6 +25,6 @@ export class Expense implements IExpense {
    */
   save(accountArg: SevdeskAccount) {
     // lets try to save the pdf first
-    accountArg.request('POST', '/Voucher/Factory/uploadTempFile', )
+    accountArg.request('POST', '/Voucher/Factory/uploadTempFile');
   }
 }
