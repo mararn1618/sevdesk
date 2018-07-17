@@ -1,4 +1,4 @@
-import { expect, tap } from 'tapbundle';
+import { expect, tap } from '@pushrocks/tapbundle';
 import * as sevdesk from '../ts';
 
 import * as qenv from 'qenv';
