@@ -3,6 +3,8 @@ import { SevdeskAccount } from './sevdesk.classes.account';
 
 import { IExpense, IExpenseItem } from '@tsclass/tsclass';
 
+import * as fs from 'fs';
+
 export class Expense implements IExpense {
   expenseItems: IExpenseItem[];
   voucherFile: any;
@@ -23,8 +25,10 @@ export class Expense implements IExpense {
   /**
    * saves the expense to Sevdesk
    */
-  save(accountArg: SevdeskAccount) {
+  async save(accountArg: SevdeskAccount) {
+
     // lets try to save the pdf first
-    accountArg.request('POST', '/Voucher/Factory/uploadTempFile');
+    const response = await accountArg.request('POST', '/Voucher/Factory/uploadTempFile', fs.createReadStream(this.voucherFile), 'file');
+    console.log(response);
   }
 }

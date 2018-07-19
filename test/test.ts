@@ -60,6 +60,7 @@ tap.test('should create an expense with PDF file', async () => {
     expenseItems: [],
     voucherFile: './test/testvoucher.pdf',
   });
+  await expense.save(sevDeskAccount);
 });
 
 tap.start();
