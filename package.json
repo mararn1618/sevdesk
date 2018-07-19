@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@pushrocks/smartfile": "^6.0.3",
-    "@pushrocks/smartrequest": "^1.1.1",
+    "@pushrocks/smartrequest": "^1.1.11",
     "@tsclass/tsclass": "^1.0.32",
     "@types/form-data": "^2.2.1",
     "form-data": "^2.3.2"

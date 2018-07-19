@@ -28,7 +28,7 @@ export class Expense implements IExpense {
   async save(accountArg: SevdeskAccount) {
 
     // lets try to save the pdf first
-    const response = await accountArg.request('POST', '/Voucher/Factory/uploadTempFile', fs.createReadStream(this.voucherFile), 'file');
+    const response = await accountArg.request('POST', '/Voucher/Factory/uploadTempFile', fs.createReadStream(this.voucherFile), 'pdf');
     console.log(response);
   }
 }
