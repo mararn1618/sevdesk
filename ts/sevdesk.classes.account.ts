@@ -20,6 +20,7 @@ export class SevdeskAccount {
   ) {
     if (payloadArg && payloadType === "pdf") {
       const response = await plugins.smartrequest.postFormData(`${this.apiDomain}${routeArg}`, {
+        method: 'POST',
         headers: {
           Authorization: this.authToken
         }
@@ -33,9 +34,9 @@ export class SevdeskAccount {
       return response.body
     } else {
       let sevdeskHeaders = {
-        Authorization: this.authToken,
+        authorization: this.authToken,
         accept: "application/json",
-        "Cache-Control": "no-cache"
+        "cache-control": "no-cache"
       };
       if (payloadArg && payloadType === "json") {
         sevdeskHeaders["Content-Type"] = "application/json";
