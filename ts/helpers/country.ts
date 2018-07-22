@@ -1,3 +1,7 @@
+/**
+ * Country is a reference to a country
+ */
+
 import { SevdeskAccount } from '../sevdesk.classes.account';
 
 export const getCountryIdByCountryName = async (

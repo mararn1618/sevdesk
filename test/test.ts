@@ -6,7 +6,7 @@ import * as qenv from 'qenv';
 const testQenv = new qenv.Qenv('./', './.nogit');
 
 let sevDeskAccount: sevdesk.SevdeskAccount;
-let sevDeskContact: sevdesk.Contact;
+let sevDeskContact: sevdesk.SevdeskContact;
 
 tap.test('should create a sevdeskAccount', async () => {
   sevDeskAccount = new sevdesk.SevdeskAccount(process.env.SEVDESK_TOKEN);
@@ -14,7 +14,7 @@ tap.test('should create a sevdeskAccount', async () => {
 });
 
 tap.test('should create contact with type person', async () => {
-  sevDeskContact = new sevdesk.Contact({
+  sevDeskContact = new sevdesk.SevdeskContact({
     title: 'Doctor',
     customerNumber: '1000',
     name: 'Toni',
@@ -35,7 +35,7 @@ tap.test('should create contact with type person', async () => {
 });
 
 tap.test('should create contact with type company', async () => {
-  sevDeskContact = new sevdesk.Contact({
+  sevDeskContact = new sevdesk.SevdeskContact({
     customerNumber: '1001',
     name: 'Start Technologies',
     type: 'company',
