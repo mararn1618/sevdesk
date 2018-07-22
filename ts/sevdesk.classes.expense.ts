@@ -9,7 +9,7 @@ import { IExpense, IExpenseItem } from '@tsclass/tsclass';
 
 import * as fs from 'fs';
 
-export class Expense implements IExpense {
+export class SevdeskExpense implements IExpense {
   expenseItems: IExpenseItem[];
   voucherFile: string; // the path to a voucherFile on disk
   contactRef: string;
@@ -17,7 +17,7 @@ export class Expense implements IExpense {
   accountingType: interfaces.TAccountingType
 
   sevDeskData: {
-    filname?: string;
+    filename?: string;
   } = {}
 
   // getters
@@ -48,8 +48,8 @@ export class Expense implements IExpense {
 
     // lets try to save the pdf first
     const response = await sevdeskAccountArg.request('POST', '/Voucher/Factory/uploadTempFile', fs.createReadStream(this.voucherFile), 'pdf');
-    this.sevDeskData.filname = response.objects.filename;
-    console.log(this.sevDeskData.filname);
+    this.sevDeskData.filename = response.objects.filename;
+    console.log(this.sevDeskData.filename);
     const voucherPositions = [];
     for (let expense of this.expenseItems) {
       voucherPositions.push({
@@ -62,7 +62,7 @@ export class Expense implements IExpense {
     }
 
     let accountingObject = await getAccountingIdByName(sevdeskAccountArg, 'Transport');
-    console.log(accountingObject);
+    //console.log(accountingObject);
 
     // lets save the actual voucher
     const voucherPayload = {

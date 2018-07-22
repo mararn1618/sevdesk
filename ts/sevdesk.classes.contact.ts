@@ -18,12 +18,16 @@ export class SevdeskContact implements IContact {
     let name: string;
     let surname: string;
     let email: string;
+    let address: IAddress;
+    let description: string;
+
+    // lets determine the contact type
     if (sevdeskApiObject.name && !sevdeskApiObject.familyname) {
       type = "company";
-      name = sevdeskApiObject.name
+      name = sevdeskApiObject.name;
     } else {
       type = "person";
-      name = 'name';
+      name = "name";
       surname = surname;
     }
 
@@ -31,7 +35,8 @@ export class SevdeskContact implements IContact {
       type: type,
       name: name,
       surname: surname,
-      address: 
+      address: address,
+      description: description
     });
 
     return sevdeskContactInstance;
@@ -126,52 +131,57 @@ export class SevdeskContact implements IContact {
         objectName: "Category"
       }
     };
-    const contactResponseJson = await sevdeskAccountArg.request(
-      "POST",
-      "/Contact",
-      payload
-    );
-    this.sevdeskId = contactResponseJson.objects.id;
-    // add address
-    if (this.address) {
-      const addressResponseJson = await sevdeskAccountArg.request(
-        "POST",
-        `/Contact/${this.sevdeskId}/addAddress`,
-        {
-          street: this.address.streetName,
-          city: this.address.city,
-          zip: this.address.postalCode,
-          country: await contactHelpers.getCountryIdByCountryName(
-            sevdeskAccountArg,
-            this.address.country
-          )
-          // category: 'main'
-        }
-      );
-    }
 
-    // add email
-    if (this.email) {
-      const emailResponseJson = await sevdeskAccountArg.request(
+    if (!this.sevdeskId) {
+      const contactResponseJson = await sevdeskAccountArg.request(
         "POST",
-        `/Contact/${this.sevdeskId}/addEmail`,
-        {
-          key: 1,
-          value: this.email
-        }
+        "/Contact",
+        payload
       );
-    }
+      this.sevdeskId = contactResponseJson.objects.id;
+      // add address
+      if (this.address) {
+        const addressResponseJson = await sevdeskAccountArg.request(
+          "POST",
+          `/Contact/${this.sevdeskId}/addAddress`,
+          {
+            street: this.address.streetName,
+            city: this.address.city,
+            zip: this.address.postalCode,
+            country: await contactHelpers.getCountryIdByCountryName(
+              sevdeskAccountArg,
+              this.address.country
+            )
+            // category: 'main'
+          }
+        );
+      }
 
-    // add phone
-    if (this.phone) {
-      const phoneResponseJson = await sevdeskAccountArg.request(
-        "POST",
-        `/Contact/${this.sevdeskId}/addPhone`,
-        {
-          key: 1,
-          value: this.phone
-        }
-      );
+      // add email
+      if (this.email) {
+        const emailResponseJson = await sevdeskAccountArg.request(
+          "POST",
+          `/Contact/${this.sevdeskId}/addEmail`,
+          {
+            key: 1,
+            value: this.email
+          }
+        );
+      }
+
+      // add phone
+      if (this.phone) {
+        const phoneResponseJson = await sevdeskAccountArg.request(
+          "POST",
+          `/Contact/${this.sevdeskId}/addPhone`,
+          {
+            key: 1,
+            value: this.phone
+          }
+        );
+      }
+    } else {
+      // TODO if there is a sevdeskId assigned rather update than creating a new contact
     }
   }
 }
