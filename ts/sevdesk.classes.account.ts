@@ -12,6 +12,10 @@ export class SevdeskAccount {
     this.authToken = authTokenArg;
   }
 
+  getCheckingAccounts() {
+    
+  }
+
   async request(
     methodArg: "POST" | "GET",
     routeArg: string,

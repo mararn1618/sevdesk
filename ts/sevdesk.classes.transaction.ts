@@ -2,9 +2,10 @@ import { SevdeskAccount } from './sevdesk.classes.account';
 import { ITransaction } from '@tsclass/tsclass';
 
 export class SevdeskTransaction implements ITransaction {
-  static async getTransactionsForCheckingAccountId(sevdeskAccountArg: SevdeskAccount, checkingAccountId: string) {
+  static async getTransactionsForCheckingAccountId(sevdeskAccountArg: SevdeskAccount, checkingAccountId: string):Promise<SevdeskTransaction[]> {
     const response = await sevdeskAccountArg.request('GET', '/CheckAccountTransaction');
     console.log(response.objects);
+    return [];
   };
   amount: number;
   date: Date;
@@ -14,13 +15,6 @@ export class SevdeskTransaction implements ITransaction {
         this[key] = optionsArg[key];
       }
     }
-  }
-
-  /**
-   * gets all Transactions associated with the checking account
-   */
-  getTransactions() {
-    
   }
 
   /**

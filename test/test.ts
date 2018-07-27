@@ -67,7 +67,7 @@ tap.test("should create a valid checking account", async () => {
   const myCheckingAccount = new sevdesk.SevdeskCheckingAccount({
     name: "Commerzbank",
     currency: "eur",
-    payments: []
+    transactions: []
   });
   await myCheckingAccount.save(testSevdeskAccount);
 });
@@ -77,7 +77,7 @@ tap.test("should get transactions for an account", async () => {
     testSevdeskAccount,
     "Commerzbank"
   );
-  myCheckingAccount.getTransactions();
-});
+  myCheckingAccount
+})
 
 tap.start();

@@ -1,36 +1,54 @@
 import { SevdeskAccount } from "./sevdesk.classes.account";
+import { SevdeskTransaction } from './sevdesk.classes.transaction';
 
 import { ICheckingAccount, TCurrency, ITransaction } from '@tsclass/tsclass';
 
 export class SevdeskCheckingAccount implements ICheckingAccount {
+  static async getAllCheckingAccount(sevdeskAccount: SevdeskAccount) {
+    const resultingCheckingAccounts: SevdeskCheckingAccount[] = [];
+    const response = await sevdeskAccount.request('GET', '/CheckAccount')
+    
+    for (let CA_ApiObject of response.objects) {
+      const sevdeskCA: SevdeskCheckingAccount = new SevdeskCheckingAccount({
+        name: CA_ApiObject.name,
+        currency: CA_ApiObject.currency,
+        transactions: null
+      });
+      sevdeskCA.sevdeskId = CA_ApiObject.id;
+      sevdeskCA.transactions = await SevdeskTransaction.getTransactionsForCheckingAccountId(sevdeskAccount, sevdeskCA.sevdeskId);
+      sevdeskCA.sevdeskAccount = sevdeskAccount;
+      resultingCheckingAccounts.push(sevdeskCA);
+    }
+    return resultingCheckingAccounts
+      
+  }
+
+  /**
+   * gets a checkingAccount from sevdesk by name
+   * @param sevdeskAccount
+   * @param checkAccontNameArg 
+   */
   static async getCheckingAccountByName(
     sevdeskAccount: SevdeskAccount,
     checkAccontNameArg: string
   ): Promise<SevdeskCheckingAccount> {
     let resultingCheckAccount: SevdeskCheckingAccount;
-    const response = await sevdeskAccount.request('GET', '/CheckAccount')
-    const existingCheckAccountApiObject = response.objects.find(checkAccountApiObject => {
-      return checkAccountApiObject.name === checkAccontNameArg
-    })
-    if(existingCheckAccountApiObject) {
-      resultingCheckAccount = new SevdeskCheckingAccount({
-        name: existingCheckAccountApiObject.name,
-        currency: existingCheckAccountApiObject.currency,
-        payments: null
-      });
-      resultingCheckAccount.sevdeskId = existingCheckAccountApiObject.id;
-    }
+    await this.getAllCheckingAccount(sevdeskAccount);
     return resultingCheckAccount;
   }
 
   // Properties
+  /**
+   * the sevdeskAccount this is from
+   */
+  sevdeskAccount: SevdeskAccount;
   /**
    * the id given by sevdesk
    */
   sevdeskId: string;
   name: string;
   currency: TCurrency;
-  payments: ITransaction[];
+  transactions: ITransaction[];
 
   constructor(optionsArg: ICheckingAccount) {
     for (let key in optionsArg) {
@@ -44,7 +62,12 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
    * saves the checking account to a SevdeskAccount instance
    * @param sevdeskAccountArg
    */
-  async save(sevdeskAccountArg: SevdeskAccount) {
+  async save(sevdeskAccountArg: SevdeskAccount = this.sevdeskAccount) {
+    if(!this.sevdeskAccount) {
+      this.sevdeskAccount = sevdeskAccountArg;
+    }
+
+
     // the main payload expected by sevdesk api
     let payload: any = {
       name: this.name,
