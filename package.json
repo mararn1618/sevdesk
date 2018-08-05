@@ -6,9 +6,9 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "author": "Lossless GmbH",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
-    "test": "(tsrun test/test.ts)",
+    "test": "(tstest test/)",
     "build": "(tsbuild)"
   },
   "devDependencies": {
@@ -18,6 +18,7 @@
     "qenv": "^1.1.7"
   },
   "dependencies": {
+    "@gitzone/tstest": "^1.0.12",
     "@pushrocks/smartfile": "^6.0.3",
     "@pushrocks/smartrequest": "^1.1.12",
     "@tsclass/tsclass": "^1.0.43",
