@@ -54,6 +54,7 @@ export class SevdeskAccount {
         }
       );
       if (response.statusCode !== 200) {
+        console.log(`Logging response body with status ${response.statusCode}:`)
         console.log(response.body);
       }
       return response.body;

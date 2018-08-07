@@ -19,10 +19,12 @@
   },
   "dependencies": {
     "@gitzone/tstest": "^1.0.12",
-    "@pushrocks/smartfile": "^6.0.3",
+    "@pushrocks/smartfile": "^6.0.5",
     "@pushrocks/smartrequest": "^1.1.12",
-    "@tsclass/tsclass": "^1.0.43",
+    "@tsclass/tsclass": "^1.0.48",
     "@types/form-data": "^2.2.1",
-    "form-data": "^2.3.2"
+    "@types/moment": "^2.13.0",
+    "form-data": "^2.3.2",
+    "moment": "^2.22.2"
   }
 }

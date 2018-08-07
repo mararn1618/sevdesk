@@ -54,7 +54,7 @@ tap.test("should create contact with type company", async () => {
 });
 
 tap.test("should create an expense with PDF file", async () => {
-  const expense = new sevdesk.SevdeskExpense({
+  const expense = new sevdesk.SevdeskVoucher({
     accountRef: null,
     contactRef: null,
     expenseItems: [],
@@ -66,7 +66,7 @@ tap.test("should create an expense with PDF file", async () => {
 tap.test("should create a valid checking account", async () => {
   const myCheckingAccount = new sevdesk.SevdeskCheckingAccount({
     name: "Commerzbank",
-    currency: "eur",
+    currency: "EUR",
     transactions: []
   });
   await myCheckingAccount.save(testSevdeskAccount);
