@@ -12,20 +12,18 @@
     "build": "(tsbuild)"
   },
   "devDependencies": {
-    "@gitzone/tsbuild": "^2.0.21",
-    "@gitzone/tsrun": "^1.1.9",
-    "@pushrocks/tapbundle": "^3.0.1",
+    "@gitzone/tsbuild": "^2.0.22",
+    "@gitzone/tsrun": "^1.1.12",
+    "@pushrocks/tapbundle": "^3.0.5",
     "qenv": "^1.1.7"
   },
   "dependencies": {
-    "@gitzone/tstest": "^1.0.12",
-    "@pushrocks/smartfile": "^6.0.5",
+    "@gitzone/tstest": "^1.0.13",
+    "@pushrocks/smartfile": "^6.0.6",
     "@pushrocks/smartrequest": "^1.1.12",
     "@tsclass/tsclass": "^1.0.48",
     "@types/form-data": "^2.2.1",
-    "@types/moment": "^2.13.0",
     "form-data": "^2.3.2",
-    "moment": "^2.22.2",
-    "smartdelay": "^1.0.4"
+    "moment": "^2.22.2"
   }
 }
