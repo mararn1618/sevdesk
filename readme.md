@@ -31,9 +31,11 @@ Typings and constructor options follow the world view of @tsclass/tsclass, a pac
 
 **Available Classes**
 
-- sevdesk.Account -> handles the basic Account setup for authentication
-- sevdesk.Contact -> handles contacts within sevdesk
-- sevdesk.Expense -> handles expenses within sevdesk
+- SevdeskAccount -> handles the basic Account setup for authentication
+- SevdeskContact -> handles contacts within sevdesk
+- SevdeskVoucher -> handles expenses/receipts/vouchers within sevdesk
+- SevdeskCheckingAccount -> handles CheckingAccounts within sevdesk
+- SevdeskTransaction -> handles Transactions within sevdesk
 
 Every class exposes static functions to **retrieve information from sevdesk**.
 Every instance of an class exposes a .save(myAccountInstanceHere) function to **store information back to sevdesk**.
@@ -42,7 +44,7 @@ Every instance of an class exposes a .save(myAccountInstanceHere) function to **
 import * as sevdesk from '@mojoio/sevdesk';
 
 const sevdeskAccount = new sevdesk.SevdeskAccount('myTokenString1234567890');
-const contacts: sevdesk.Contact[] = sevdeskAccount.getContacts();
+const contacts: sevdesk.SevdeskContact[] = sevdesk.SevdeskContact.getContacts(sevdeskAccount);
 const certainContact = contacts.find(contact => {
   return contact.customerNumber === '1000';
 });
@@ -54,9 +56,41 @@ certainContact.name = 'My New Name';
 certainContact.save(sevdeskAccount);
 ```
 
-## Milestones
+A simple example to create Transactions:
 
-v2 - 10.08.2018 - PaymentAccount class, ExpenseAccount class
+```typescript
+import * as sevdesk from '@mojoio/sevdesk';
+
+const run = async () => {
+  const sevdeskAccount = new sevdesk.SevdeskAccount('');
+  let sevdeskCheckingAccount = await sevdesk.SevdeskCheckingAccount.getCheckingAccountByName(
+    sevdeskAccount,
+    'commerzbank'
+  );
+
+  if(!sevdeskCheckingAccount) {
+    sevdeskCheckingAccount = new sevdesk.SevdeskCheckingAccount({
+      currency: 'EUR',
+      name: 'commerzbank',
+      transactions: []
+    });
+    sevdeskCheckingAccount.save(sevdeskAccount);
+  }
+
+  const myTransaction = new sevdesk.SevdeskTransaction({
+    sevdeskCheckingAccountId: sevdeskCheckingAccount.sevdeskId,
+    payeeName: 'Max Mustermann',
+    amount: 100,
+    date: new Date(),
+    status: "unpaid",
+    description: 'a cool description'
+  })
+
+  myTransaction.save(sevdeskAccount);
+};
+
+run();
+```
 
 For further information read the linked docs at the top of this README.
 
