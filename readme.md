@@ -62,7 +62,7 @@ A simple example to create Transactions:
 import * as sevdesk from '@mojoio/sevdesk';
 
 const run = async () => {
-  const sevdeskAccount = new sevdesk.SevdeskAccount('');
+  const sevdeskAccount = new sevdesk.SevdeskAccount('myTokenString1234567890');
   let sevdeskCheckingAccount = await sevdesk.SevdeskCheckingAccount.getCheckingAccountByName(
     sevdeskAccount,
     'commerzbank'
