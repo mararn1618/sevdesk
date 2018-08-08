@@ -74,7 +74,10 @@ const run = async () => {
       name: 'commerzbank',
       transactions: []
     });
-    sevdeskCheckingAccount.save(sevdeskAccount);
+    
+    // NOTE: .save() will get the sevdeskId and store it in the instance at .sevdeskId !
+    // this is the default behaviour for all classes that can be `.save()`ed to sevdesk !
+    await sevdeskCheckingAccount.save(sevdeskAccount);
   }
 
   const myTransaction = new sevdesk.SevdeskTransaction({
@@ -86,7 +89,7 @@ const run = async () => {
     description: 'a cool description'
   })
 
-  myTransaction.save(sevdeskAccount);
+  await myTransaction.save(sevdeskAccount);
 };
 
 run();
