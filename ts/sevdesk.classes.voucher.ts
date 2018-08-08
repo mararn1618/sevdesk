@@ -1,6 +1,7 @@
 import * as plugins from './sevdesk.plugins';
 import { SevdeskAccount } from './sevdesk.classes.account';
 import { SevdeskContact } from './sevdesk.classes.contact';
+import * as smartdelay from 'smartdelay';
 
 import { getAccountingIdByName } from './helpers/accountingtype';
 import * as interfaces from './sevdesk.interfaces';
@@ -55,7 +56,7 @@ export class SevdeskVoucher implements IExpense {
       const response = await sevdeskAccountArg.request(
         'POST',
         '/Voucher/Factory/uploadTempFile',
-        fs.createReadStream(this.voucherFile),
+        this.voucherFile,
         'pdf'
       );
       filenameForPayload = response.objects.filename;

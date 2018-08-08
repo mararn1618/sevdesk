@@ -74,7 +74,7 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
     // the main payload expected by sevdesk api
     let payload: any = {
       name: this.name,
-      type: 'apiAccount',
+      type: 'offline',
       currency: this.currency
     }
 

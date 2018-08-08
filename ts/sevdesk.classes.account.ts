@@ -32,7 +32,7 @@ export class SevdeskAccount {
         {
           name: 'file.pdf',
           type: 'filePath',
-          payload: 'test/testvoucher.pdf'
+          payload: payloadArg
         }
       ])
       return response.body
