@@ -8,13 +8,13 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
     const resultingCheckingAccounts: SevdeskCheckingAccount[] = [];
     const response = await sevdeskAccount.request('GET', '/CheckAccount')
     
-    for (let CA_ApiObject of response.objects) {
+    for (let caApiObject of response.objects) {
       const sevdeskCA: SevdeskCheckingAccount = new SevdeskCheckingAccount({
-        name: CA_ApiObject.name,
-        currency: CA_ApiObject.currency,
+        name: caApiObject.name,
+        currency: caApiObject.currency,
         transactions: null
       });
-      sevdeskCA.sevdeskId = CA_ApiObject.id;
+      sevdeskCA.sevdeskId = caApiObject.id;
       sevdeskCA.transactions = await SevdeskTransaction.getTransactionsForCheckingAccountId(sevdeskAccount, sevdeskCA.sevdeskId);
       sevdeskCA.sevdeskAccount = sevdeskAccount;
       resultingCheckingAccounts.push(sevdeskCA);
@@ -74,7 +74,7 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
     // the main payload expected by sevdesk api
     let payload: any = {
       name: this.name,
-      type: 'offline',
+      type: 'online',
       currency: this.currency
     }
 
