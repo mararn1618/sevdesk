@@ -1,4 +1,6 @@
 import * as plugins from "./sevdesk.plugins";
+import { SevdeskCheckingAccount } from './sevdesk.classes.checkingaccount';
+import { SevdeskContact } from './sevdesk.classes.contact';
 
 export class SevdeskAccount {
   /**
@@ -12,8 +14,12 @@ export class SevdeskAccount {
     this.authToken = authTokenArg;
   }
 
-  getCheckingAccounts() {
-    
+  async getCheckingAccounts() {
+    return await SevdeskCheckingAccount.getAllCheckingAccounts(this);
+  }
+
+  async getContacts() {
+    return await SevdeskContact.getAllContacts(this);
   }
 
   async request(

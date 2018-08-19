@@ -4,7 +4,7 @@ import { SevdeskTransaction } from './sevdesk.classes.transaction';
 import { ICheckingAccount, TCurrency, ITransaction } from '@tsclass/tsclass';
 
 export class SevdeskCheckingAccount implements ICheckingAccount {
-  static async getAllCheckingAccount(sevdeskAccount: SevdeskAccount) {
+  static async getAllCheckingAccounts(sevdeskAccount: SevdeskAccount) {
     const resultingCheckingAccounts: SevdeskCheckingAccount[] = [];
     const response = await sevdeskAccount.request('GET', '/CheckAccount')
     
@@ -33,7 +33,7 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
     checkingAccountNameArg: string
   ): Promise<SevdeskCheckingAccount> {
     let resultingCheckingAccount: SevdeskCheckingAccount;
-    const checkingAccountsArray = await this.getAllCheckingAccount(sevdeskAccount);
+    const checkingAccountsArray = await this.getAllCheckingAccounts(sevdeskAccount);
     resultingCheckingAccount = checkingAccountsArray.find(checkingAccount => {
       return checkingAccount.name === checkingAccountNameArg
     })

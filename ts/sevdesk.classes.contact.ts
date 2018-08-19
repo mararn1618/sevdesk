@@ -46,7 +46,7 @@ export class SevdeskContact implements IContact {
    * get contacts from Sevdesk
    * @param sevdeskAccount
    */
-  static async getContacts(
+  static async getAllContacts(
     sevdeskAccount: SevdeskAccount
   ): Promise<SevdeskContact[]> {
     const result = await sevdeskAccount.request("GET", "/Contact");
@@ -64,7 +64,7 @@ export class SevdeskContact implements IContact {
     sevdeskAccount: SevdeskAccount,
     nameArg: string
   ) {
-    const resultContactArray = await SevdeskContact.getContacts(sevdeskAccount);
+    const resultContactArray = await SevdeskContact.getAllContacts(sevdeskAccount);
   }
 
   /**
