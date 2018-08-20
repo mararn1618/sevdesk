@@ -82,7 +82,7 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
     if(!this.sevdeskId) {
       const response = await sevdeskAccountArg.request('POST', '/CheckAccount', payload);
       this.sevdeskId = response.objects.id;
-      console.log(this.sevdeskId);
+      // console.log(this.sevdeskId);
     } else {
       // TODO: if there is a sevdeskId assigned rather update this checkingaccount instead
     }

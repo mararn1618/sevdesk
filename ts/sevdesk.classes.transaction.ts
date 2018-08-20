@@ -15,7 +15,7 @@ export class SevdeskTransaction implements ISevdeskTransaction {
   static async getTransactionsForCheckingAccountId(sevdeskAccountArg: SevdeskAccount, checkingAccountId: string):Promise<SevdeskTransaction[]> {
     const response = await sevdeskAccountArg.request('GET', '/CheckAccountTransaction');
     const apiObjectArray = response.objects;
-    console.log(apiObjectArray);
+    // console.log(apiObjectArray);
     return [];
   };
   
@@ -61,7 +61,7 @@ export class SevdeskTransaction implements ISevdeskTransaction {
         objectName: 'CheckAccount'
       }
     }
-    console.log(payload)
+    // console.log(payload)
     await sevdeskAccountArg.request('POST', '/CheckAccountTransaction', payload)
   }
 }
