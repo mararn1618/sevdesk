@@ -9,18 +9,23 @@ import {
   TContactType
 } from "@tsclass/tsclass";
 
+export interface ISevdeskContact extends IContact {
+  sevdeskId: string;
+}
+
 import * as contactHelpers from "./helpers/country";
 import { ENGINE_METHOD_DIGESTS } from "constants";
 
 export class SevdeskContact implements IContact {
   private static fromSevdeskApiObject(sevdeskApiObject: any): SevdeskContact {
+    let sevdeskId: string;
     let type: TContactType;
     let name: string;
     let surname: string;
     let email: string;
     let address: IAddress;
     let description: string;
-
+    
     // lets determine the contact type
     if (sevdeskApiObject.name && !sevdeskApiObject.familyname) {
       type = "company";
@@ -31,7 +36,11 @@ export class SevdeskContact implements IContact {
       surname = surname;
     }
 
+    // always
+    sevdeskId = sevdeskApiObject.id;
+
     const sevdeskContactInstance = new SevdeskContact({
+      sevdeskId: sevdeskId,
       type: type,
       name: name,
       surname: surname,
@@ -93,7 +102,7 @@ export class SevdeskContact implements IContact {
   accountNumber: string;
   vatId: string;
 
-  constructor(contactObjectArg: IContact) {
+  constructor(contactObjectArg: ISevdeskContact) {
     for (let key in contactObjectArg) {
       if (contactObjectArg[key]) {
         this[key] = contactObjectArg[key];
