@@ -1,18 +1,43 @@
 import * as plugins from './sevdesk.plugins';
 import { SevdeskAccount } from './sevdesk.classes.account';
 import { SevdeskContact } from './sevdesk.classes.contact';
-
-import { getAccountingIdByName } from './helpers/accountingtype';
+import { SevdeskAccountingType } from './sevdesk.classes.accountingtype';
 import * as interfaces from './sevdesk.interfaces';
 
 import { IExpense, IExpenseItem } from '@tsclass/tsclass';
 
+export interface ISevdeskExpense extends IExpense {
+  contactRef: SevdeskContact;
+  expenseItems: ISevdeskExpenseItem[];
+  voucherFilePath: string;
+}
+
+export interface ISevdeskExpenseItem extends IExpenseItem {
+  accountingType: SevdeskAccountingType;
+}
+
 import * as fs from 'fs';
+import { VoucherPosition } from './helpers/voucherposition';
 
 export class SevdeskVoucher implements IExpense {
-  expenseItems: IExpenseItem[];
-  voucherFile: string; // the path to a voucherFile on disk
-  contactRef: string;
+  /**
+   * expense items describe 
+   */
+  expenseItems: ISevdeskExpenseItem[] = [];
+
+  /**
+   * path to the voucher file on disk
+   */
+  voucherFilePath: string;
+
+  /**
+   * contactRef
+   */
+  contactRef: SevdeskContact;
+
+  /**
+   * 
+   */
   accountRef: string;
   accountingType: interfaces.TAccountingType;
   description: string;
@@ -31,7 +56,7 @@ export class SevdeskVoucher implements IExpense {
   /**
    * the contructor for an Expense
    */
-  constructor(expenseObjectArg: IExpense) {
+  constructor(expenseObjectArg: ISevdeskExpense) {
     for (let key in expenseObjectArg) {
       if (expenseObjectArg[key]) {
         this[key] = expenseObjectArg[key];
@@ -39,8 +64,12 @@ export class SevdeskVoucher implements IExpense {
     }
   }
 
-  addExpenseItem(expenseItemArg: IExpenseItem) {
+  addExpenseItem(expenseItemArg: ISevdeskExpenseItem) {
     this.expenseItems.push(expenseItemArg);
+  }
+
+  setContactRef(contactArg: SevdeskContact) {
+    this.contactRef = contactArg;
   }
 
   /**
@@ -50,12 +79,12 @@ export class SevdeskVoucher implements IExpense {
     // lets try to save the pdf first
     let filenameForPayload: string = 'null';
 
-    if (this.voucherFile) {
-      console.log(this.voucherFile);
+    if (this.voucherFilePath) {
+      console.log(this.voucherFilePath);
       const response = await sevdeskAccountArg.request(
         'POST',
         '/Voucher/Factory/uploadTempFile',
-        this.voucherFile,
+        this.voucherFilePath,
         'pdf'
       );
       filenameForPayload = response.objects.filename;
@@ -73,11 +102,8 @@ export class SevdeskVoucher implements IExpense {
       });
     }
 
-    let accountingObject = await getAccountingIdByName(sevdeskAccountArg, 'Transport');
-    //console.log(accountingObject);
-
     // lets save the actual voucher
-    const voucherFactoryPayload = {
+    const voucherFactoryPayload: any = {
       voucher: {
         objectName: 'Voucher',
         mapAll: true,
@@ -94,21 +120,26 @@ export class SevdeskVoucher implements IExpense {
       voucherPosSave: (() => {
         const voucherPositions: any[] = [];
         for (const expenseItem of this.expenseItems) {
-          const voucherPos = {
-            sum: expenseItem.amount,
-            net: 'false',
-            taxRate: expenseItem.taxPercentage,
-            objectName: 'VoucherPos',
-            accountingType: 'null',
-            comment: expenseItem.description,
-            mapAll: 'true'
-          };
-          voucherPositions.push(voucherPos);
+          const voucherPos = new VoucherPosition({
+            accountingType: expenseItem.accountingType,
+            amount: expenseItem.amount,
+            taxPercentage: expenseItem.taxPercentage,
+            asset: false,
+            description: expenseItem.description
+          })
+          voucherPositions.push(voucherPos.getFormatedObjectForApi());
         }
         return voucherPositions;
       })(),
       voucherPosDelete: 'null'
       // supplier: SevdeskContact.getContactByName(sevdeskAccountArg, 'hi')
+    };
+    if(this.contactRef) {
+      voucherFactoryPayload.voucher.supplier = {
+        objectName: 'Contact',
+        id: this.contactRef.sevdeskId
+      },
+      voucherFactoryPayload.supplierNameAtSave = this.contactRef.name;
     };
     console.log(voucherFactoryPayload);
     await sevdeskAccountArg.request('POST', '/Voucher/Factory/saveVoucher', voucherFactoryPayload);

@@ -32,6 +32,8 @@ tap.test("should create contact with type person", async () => {
     description: "Toni is an entrepreneur and a natural Person"
   });
   await sevDeskTestContact.save(testSevdeskAccount);
+  console.log(sevDeskTestContact)
+  expect(sevDeskTestContact).to.haveOwnProperty('sevdeskId')
 });
 
 tap.test("should create contact with type company", async () => {
@@ -53,19 +55,26 @@ tap.test("should create contact with type company", async () => {
   await sevDeskTestContact.save(testSevdeskAccount);
 });
 
-tap.test("should create an expense with PDF file", async () => {
-  const expense = new sevdesk.SevdeskVoucher({
+tap.test("should create a valid voucher with PDF file", async () => {
+  const voucher = new sevdesk.SevdeskVoucher({
     date: new Date(),
     description: 'a cool expense',
     accountRef: null,
     contactRef: null,
-    expenseItems: [],
-    voucherFile: "./test/testvoucher.pdf"
+    expenseItems: [{
+      accountingType: await sevdesk.SevdeskAccountingType.getByFuzzyName(testSevdeskAccount, 'Train Ticket'),
+      amount: 119,
+      asset: false,
+      description: 'traveling with Deutsche Bahn',
+      taxPercentage: 19
+    }],
+    voucherFilePath: "./test/testvoucher.pdf"
   });
-  await expense.save(testSevdeskAccount);
+  voucher.setContactRef(sevDeskTestContact);
+  await voucher.save(testSevdeskAccount);
 });
 
-tap.test("should create a valid checking account", async () => {
+tap.skip.test("should create a valid checking account", async () => {
   const myCheckingAccount = new sevdesk.SevdeskCheckingAccount({
     name: "Commerzbank",
     currency: "EUR",
@@ -74,7 +83,7 @@ tap.test("should create a valid checking account", async () => {
   await myCheckingAccount.save(testSevdeskAccount);
 });
 
-tap.test("should get transactions for an account", async () => {
+tap.skip.test("should get transactions for an account", async () => {
   const myCheckingAccount = await sevdesk.SevdeskCheckingAccount.getCheckingAccountByName(
     testSevdeskAccount,
     "Commerzbank"

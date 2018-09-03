@@ -10,7 +10,7 @@ import {
 } from "@tsclass/tsclass";
 
 export interface ISevdeskContact extends IContact {
-  sevdeskId: string;
+  sevdeskId?: string;
 }
 
 import * as contactHelpers from "./helpers/country";
