@@ -1,7 +1,7 @@
 {
   "name": "@mojoio/sevdesk",
   "private": false,
-  "version": "1.5.15",
+  "version": "1.5.16",
   "description": "mojoio integration package for sevdesk",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
