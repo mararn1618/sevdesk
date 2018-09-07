@@ -4,9 +4,10 @@ import { SevdeskContact } from './sevdesk.classes.contact';
 import { SevdeskAccountingType } from './sevdesk.classes.accountingtype';
 import * as interfaces from './sevdesk.interfaces';
 
-import { IExpense, IExpenseItem } from '@tsclass/tsclass';
+import { IVoucher, IExpenseItem } from '@tsclass/tsclass';
 
-export interface ISevdeskExpense extends IExpense {
+export interface ISevdeskVoucher extends IVoucher {
+  accountRef: SevdeskAccount,
   contactRef: SevdeskContact;
   expenseItems: ISevdeskExpenseItem[];
   voucherFilePath: string;
@@ -19,7 +20,7 @@ export interface ISevdeskExpenseItem extends IExpenseItem {
 import * as fs from 'fs';
 import { VoucherPosition } from './helpers/voucherposition';
 
-export class SevdeskVoucher implements IExpense {
+export class SevdeskVoucher implements IVoucher {
   /**
    * expense items describe 
    */
@@ -56,7 +57,7 @@ export class SevdeskVoucher implements IExpense {
   /**
    * the contructor for an Expense
    */
-  constructor(expenseObjectArg: ISevdeskExpense) {
+  constructor(expenseObjectArg: ISevdeskVoucher) {
     for (let key in expenseObjectArg) {
       if (expenseObjectArg[key]) {
         this[key] = expenseObjectArg[key];
