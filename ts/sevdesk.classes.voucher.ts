@@ -20,7 +20,7 @@ export interface ISevdeskExpenseItem extends IExpenseItem {
 import * as fs from 'fs';
 import { VoucherPosition } from './helpers/voucherposition';
 
-export class SevdeskVoucher implements IVoucher {
+export class SevdeskVoucher implements ISevdeskVoucher {
   /**
    * expense items describe 
    */
@@ -39,7 +39,7 @@ export class SevdeskVoucher implements IVoucher {
   /**
    * 
    */
-  accountRef: string;
+  accountRef: SevdeskAccount;
   accountingType: interfaces.TAccountingType;
   description: string;
   date: Date;
