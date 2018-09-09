@@ -109,6 +109,7 @@ export class SevdeskVoucher implements IVoucher {
         objectName: 'Voucher',
         mapAll: true,
         voucherDate: plugins.moment(this.date).format(),
+        paymentDeadline: plugins.moment(this.date).format(),
         payDate: null,
         status: 100,
         comment: 'null',
