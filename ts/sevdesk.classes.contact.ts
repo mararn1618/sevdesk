@@ -69,11 +69,14 @@ export class SevdeskContact implements IContact {
     return resultContactArray;
   }
 
-  static async getContactByName(
+  static async getContactByFuzzyName(
     sevdeskAccount: SevdeskAccount,
     nameArg: string
   ) {
     const resultContactArray = await SevdeskContact.getAllContacts(sevdeskAccount);
+    const objectSorter = new plugins.smartfuzzy.ObjectSorter<SevdeskContact>(resultContactArray);
+    const sortedContactArray = objectSorter.sort(nameArg, ['name', 'surname']);
+    return sortedContactArray[0];
   }
 
   /**
