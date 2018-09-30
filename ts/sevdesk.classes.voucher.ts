@@ -40,7 +40,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
    * 
    */
   accountRef: SevdeskAccount;
-  accountingType: interfaces.TAccountingType;
+  accountingType: interfaces.TAvailableAccountingType;
   description: string;
   date: Date;
   supplierName: string;
