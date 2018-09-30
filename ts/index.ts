@@ -4,4 +4,4 @@ export * from './sevdesk.classes.voucher';
 export * from './sevdesk.classes.checkingaccount'
 export * from './sevdesk.classes.transaction';
 export * from './sevdesk.classes.accountingtype';
-export * from './sevdesk.classes.accountingtype';
+export * from './sevdesk.interfaces';

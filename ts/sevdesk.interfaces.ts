@@ -1,4 +1,4 @@
-export type TAccountingType = 'OTHER INCOME' |
+export type TAvailableAccountingType = 'OTHER INCOME' |
 'OTHER COSTS' |
 'SALES TAX COSTS' |
 'VEHICLE' |
