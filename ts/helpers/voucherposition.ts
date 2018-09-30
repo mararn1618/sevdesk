@@ -35,7 +35,7 @@ export class VoucherPosition implements IVoucherPosition {
   }
 
   getFormatedObjectForApi() {
-    const sum = this.amount * (100 / (100 + this.taxPercentage));
+    const sum = (this.amount * (100 / (100 + this.taxPercentage)));
     const returnObject = {
       sum: sum,
       net: 'false',
