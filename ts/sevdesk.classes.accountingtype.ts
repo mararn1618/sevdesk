@@ -56,10 +56,10 @@ export class SevdeskAccountingType implements IAccountingType {
   /**
    * the constructor for a VoucherPosition
    */
-  constructor(options: IAccountingType) {
-    for (let key in options) {
-      if (options[key]) {
-        this[key] = options[key];
+  constructor(optionsArg: IAccountingType) {
+    for (let key in optionsArg) {
+      if (optionsArg[key] || optionsArg[key] === 0) {
+        this[key] = optionsArg[key];
       }
     }
   }

@@ -105,10 +105,10 @@ export class SevdeskContact implements IContact {
   accountNumber: string;
   vatId: string;
 
-  constructor(contactObjectArg: ISevdeskContact) {
-    for (let key in contactObjectArg) {
-      if (contactObjectArg[key]) {
-        this[key] = contactObjectArg[key];
+  constructor(optionsArg: ISevdeskContact) {
+    for (let key in optionsArg) {
+      if (optionsArg[key]  || optionsArg[key] === 0) {
+        this[key] = optionsArg[key];
       }
     }
   }

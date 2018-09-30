@@ -28,7 +28,7 @@ export class VoucherPosition implements IVoucherPosition {
    */
   constructor(options: IVoucherPosition) {
     for (let key in options) {
-      if (options[key]) {
+      if (options[key] || options[key] === 0) {
         this[key] = options[key];
       }
     }
@@ -36,6 +36,7 @@ export class VoucherPosition implements IVoucherPosition {
 
   getFormatedObjectForApi() {
     const sum = (this.amount * (100 / (100 + this.taxPercentage)));
+    console.log(sum);
     const returnObject = {
       sum: sum,
       net: 'false',

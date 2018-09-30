@@ -59,7 +59,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
    */
   constructor(expenseObjectArg: ISevdeskVoucher) {
     for (let key in expenseObjectArg) {
-      if (expenseObjectArg[key]) {
+      if (expenseObjectArg[key] || expenseObjectArg[key] === 0) {
         this[key] = expenseObjectArg[key];
       }
     }
@@ -144,6 +144,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
       voucherFactoryPayload.supplierNameAtSave = this.contactRef.name;
     };
     console.log(voucherFactoryPayload);
+    console.log('jo')
     await sevdeskAccountArg.request('POST', '/Voucher/Factory/saveVoucher', voucherFactoryPayload);
   }
 }

@@ -55,7 +55,7 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
 
   constructor(optionsArg: ICheckingAccount) {
     for (let key in optionsArg) {
-      if (optionsArg[key]) {
+      if (optionsArg[key] || optionsArg[key] === 0) {
         this[key] = optionsArg[key];
       }
     }

@@ -33,7 +33,7 @@ export class SevdeskTransaction implements ISevdeskTransaction {
    */
   constructor(optionsArg: ISevdeskTransaction) {
     for (let key in optionsArg) {
-      if (optionsArg[key]) {
+      if (optionsArg[key] || optionsArg[key] === 0) {
         this[key] = optionsArg[key];
       }
     }
