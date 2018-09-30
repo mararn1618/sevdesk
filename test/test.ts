@@ -13,6 +13,10 @@ tap.test("should create a sevdeskAccount", async () => {
   expect(testSevdeskAccount).to.be.instanceof(sevdesk.SevdeskAccount);
 });
 
+tap.test('should get all available booking types', async () => {
+  const allAccountingTypes = await sevdesk.SevdeskAccountingType.getAllAccountingTypes(testSevdeskAccount);
+})
+
 tap.test("should create contact with type person", async () => {
   sevDeskTestContact = new sevdesk.SevdeskContact({
     title: "Doctor",
