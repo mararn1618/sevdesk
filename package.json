@@ -15,7 +15,9 @@
     "@gitzone/tsbuild": "^2.0.22",
     "@gitzone/tsrun": "^1.1.12",
     "@pushrocks/tapbundle": "^3.0.7",
-    "qenv": "^1.1.7"
+    "qenv": "^1.1.7",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0"
   },
   "dependencies": {
     "@gitzone/tstest": "^1.0.15",

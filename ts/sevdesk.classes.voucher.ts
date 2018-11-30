@@ -7,7 +7,7 @@ import * as interfaces from './sevdesk.interfaces';
 import { IVoucher, IExpenseItem } from '@tsclass/tsclass';
 
 export interface ISevdeskVoucher extends IVoucher {
-  accountRef: SevdeskAccount,
+  accountRef: SevdeskAccount;
   contactRef: SevdeskContact;
   expenseItems: ISevdeskExpenseItem[];
   voucherFilePath: string;
@@ -22,7 +22,7 @@ import { VoucherPosition } from './helpers/voucherposition';
 
 export class SevdeskVoucher implements ISevdeskVoucher {
   /**
-   * expense items describe 
+   * expense items describe
    */
   expenseItems: ISevdeskExpenseItem[] = [];
 
@@ -37,7 +37,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
   contactRef: SevdeskContact;
 
   /**
-   * 
+   *
    */
   accountRef: SevdeskAccount;
   accountingType: interfaces.TAvailableAccountingType;
@@ -114,7 +114,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
         status: 100,
         comment: 'null',
         taxType: 'default',
-        creditDebit: 'D',
+        creditDebit: 'C',
         voucherType: 'VOU',
         total: this.sum
       },
@@ -128,7 +128,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
             taxPercentage: expenseItem.taxPercentage,
             asset: false,
             description: expenseItem.description
-          })
+          });
           voucherPositions.push(voucherPos.getFormatedObjectForApi());
         }
         return voucherPositions;
@@ -136,15 +136,15 @@ export class SevdeskVoucher implements ISevdeskVoucher {
       voucherPosDelete: 'null'
       // supplier: SevdeskContact.getContactByName(sevdeskAccountArg, 'hi')
     };
-    if(this.contactRef) {
-      voucherFactoryPayload.voucher.supplier = {
+    if (this.contactRef) {
+      (voucherFactoryPayload.voucher.supplier = {
         objectName: 'Contact',
         id: this.contactRef.sevdeskId
-      },
-      voucherFactoryPayload.supplierNameAtSave = this.contactRef.name;
-    };
+      }),
+        (voucherFactoryPayload.supplierNameAtSave = this.contactRef.name);
+    }
     console.log(voucherFactoryPayload);
-    console.log('jo')
+    console.log('jo');
     await sevdeskAccountArg.request('POST', '/Voucher/Factory/saveVoucher', voucherFactoryPayload);
   }
 }

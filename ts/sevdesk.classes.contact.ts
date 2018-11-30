@@ -1,20 +1,20 @@
-import * as plugins from "./sevdesk.plugins";
+import * as plugins from './sevdesk.plugins';
 
-import { SevdeskAccount } from "./sevdesk.classes.account";
+import { SevdeskAccount } from './sevdesk.classes.account';
 import {
   IContact,
   TContactSalutation,
   IAddress,
   TContactTitle,
   TContactType
-} from "@tsclass/tsclass";
+} from '@tsclass/tsclass';
 
 export interface ISevdeskContact extends IContact {
   sevdeskId?: string;
 }
 
-import * as contactHelpers from "./helpers/country";
-import { ENGINE_METHOD_DIGESTS } from "constants";
+import * as contactHelpers from './helpers/country';
+import { ENGINE_METHOD_DIGESTS } from 'constants';
 
 export class SevdeskContact implements IContact {
   private static fromSevdeskApiObject(sevdeskApiObject: any): SevdeskContact {
@@ -25,14 +25,14 @@ export class SevdeskContact implements IContact {
     let email: string;
     let address: IAddress;
     let description: string;
-    
+
     // lets determine the contact type
     if (sevdeskApiObject.name && !sevdeskApiObject.familyname) {
-      type = "company";
+      type = 'company';
       name = sevdeskApiObject.name;
     } else {
-      type = "person";
-      name = "name";
+      type = 'person';
+      name = 'name';
       surname = surname;
     }
 
@@ -55,24 +55,17 @@ export class SevdeskContact implements IContact {
    * get contacts from Sevdesk
    * @param sevdeskAccount
    */
-  static async getAllContacts(
-    sevdeskAccount: SevdeskAccount
-  ): Promise<SevdeskContact[]> {
-    const result = await sevdeskAccount.request("GET", "/Contact");
+  static async getAllContacts(sevdeskAccount: SevdeskAccount): Promise<SevdeskContact[]> {
+    const result = await sevdeskAccount.request('GET', '/Contact');
     const resultContactArray: SevdeskContact[] = [];
     for (let contactApiObject of result.objects) {
-      const sevdeskContact = SevdeskContact.fromSevdeskApiObject(
-        contactApiObject
-      );
+      const sevdeskContact = SevdeskContact.fromSevdeskApiObject(contactApiObject);
       resultContactArray.push(sevdeskContact);
     }
     return resultContactArray;
   }
 
-  static async getContactByFuzzyName(
-    sevdeskAccount: SevdeskAccount,
-    nameArg: string
-  ) {
+  static async getContactByFuzzyName(sevdeskAccount: SevdeskAccount, nameArg: string) {
     const resultContactArray = await SevdeskContact.getAllContacts(sevdeskAccount);
     const objectSorter = new plugins.smartfuzzy.ObjectSorter<SevdeskContact>(resultContactArray);
     const sortedContactArray = objectSorter.sort(nameArg, ['name', 'surname']);
@@ -107,7 +100,7 @@ export class SevdeskContact implements IContact {
 
   constructor(optionsArg: ISevdeskContact) {
     for (let key in optionsArg) {
-      if (optionsArg[key]  || optionsArg[key] === 0) {
+      if (optionsArg[key] || optionsArg[key] === 0) {
         this[key] = optionsArg[key];
       }
     }
@@ -116,14 +109,14 @@ export class SevdeskContact implements IContact {
   async save(sevdeskAccountArg: SevdeskAccount) {
     let payload: any;
 
-    if (this.type === "company") {
+    if (this.type === 'company') {
       payload = {
         name: this.name,
         bankNumber: this.accountNumber,
         vatNumber: this.vatId,
         description: this.description
       };
-    } else if (this.type === "person") {
+    } else if (this.type === 'person') {
       payload = {
         familyname: this.surname,
         surename: this.name,
@@ -140,21 +133,17 @@ export class SevdeskContact implements IContact {
       ...payload,
       category: {
         id: 3,
-        objectName: "Category"
+        objectName: 'Category'
       }
     };
 
     if (!this.sevdeskId) {
-      const contactResponseJson = await sevdeskAccountArg.request(
-        "POST",
-        "/Contact",
-        payload
-      );
+      const contactResponseJson = await sevdeskAccountArg.request('POST', '/Contact', payload);
       this.sevdeskId = contactResponseJson.objects.id;
       // add address
       if (this.address) {
         const addressResponseJson = await sevdeskAccountArg.request(
-          "POST",
+          'POST',
           `/Contact/${this.sevdeskId}/addAddress`,
           {
             street: this.address.streetName,
@@ -172,7 +161,7 @@ export class SevdeskContact implements IContact {
       // add email
       if (this.email) {
         const emailResponseJson = await sevdeskAccountArg.request(
-          "POST",
+          'POST',
           `/Contact/${this.sevdeskId}/addEmail`,
           {
             key: 1,
@@ -184,7 +173,7 @@ export class SevdeskContact implements IContact {
       // add phone
       if (this.phone) {
         const phoneResponseJson = await sevdeskAccountArg.request(
-          "POST",
+          'POST',
           `/Contact/${this.sevdeskId}/addPhone`,
           {
             key: 1,

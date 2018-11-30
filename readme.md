@@ -68,13 +68,13 @@ const run = async () => {
     'commerzbank'
   );
 
-  if(!sevdeskCheckingAccount) {
+  if (!sevdeskCheckingAccount) {
     sevdeskCheckingAccount = new sevdesk.SevdeskCheckingAccount({
       currency: 'EUR',
       name: 'commerzbank',
       transactions: []
     });
-    
+
     // NOTE: .save() will get the sevdeskId and store it in the instance at .sevdeskId !
     // this is the default behaviour for all classes that can be `.save()`ed to sevdesk !
     await sevdeskCheckingAccount.save(sevdeskAccount);
@@ -85,9 +85,9 @@ const run = async () => {
     payeeName: 'Max Mustermann',
     amount: 100,
     date: new Date(),
-    status: "unpaid",
+    status: 'unpaid',
     description: 'a cool description'
-  })
+  });
 
   await myTransaction.save(sevdeskAccount);
 };

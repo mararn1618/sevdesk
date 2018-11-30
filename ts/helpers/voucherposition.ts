@@ -10,7 +10,7 @@ export interface IVoucherPosition {
   taxPercentage: number;
   asset: boolean;
   description: string;
-  accountingType: SevdeskAccountingType
+  accountingType: SevdeskAccountingType;
 }
 
 /**
@@ -35,7 +35,7 @@ export class VoucherPosition implements IVoucherPosition {
   }
 
   getFormatedObjectForApi() {
-    const sum = (this.amount * (100 / (100 + this.taxPercentage)));
+    const sum = this.amount * (100 / (100 + this.taxPercentage));
     console.log(sum);
     const returnObject = {
       sum: sum,
@@ -49,6 +49,6 @@ export class VoucherPosition implements IVoucherPosition {
       comment: this.description,
       mapAll: 'true'
     };
-    return returnObject
+    return returnObject;
   }
 }

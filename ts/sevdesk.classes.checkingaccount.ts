@@ -1,4 +1,4 @@
-import { SevdeskAccount } from "./sevdesk.classes.account";
+import { SevdeskAccount } from './sevdesk.classes.account';
 import { SevdeskTransaction } from './sevdesk.classes.transaction';
 
 import { ICheckingAccount, TCurrency, ITransaction } from '@tsclass/tsclass';
@@ -6,8 +6,8 @@ import { ICheckingAccount, TCurrency, ITransaction } from '@tsclass/tsclass';
 export class SevdeskCheckingAccount implements ICheckingAccount {
   static async getAllCheckingAccounts(sevdeskAccount: SevdeskAccount) {
     const resultingCheckingAccounts: SevdeskCheckingAccount[] = [];
-    const response = await sevdeskAccount.request('GET', '/CheckAccount')
-    
+    const response = await sevdeskAccount.request('GET', '/CheckAccount');
+
     for (let caApiObject of response.objects) {
       const sevdeskCA: SevdeskCheckingAccount = new SevdeskCheckingAccount({
         name: caApiObject.name,
@@ -15,18 +15,20 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
         transactions: null
       });
       sevdeskCA.sevdeskId = caApiObject.id;
-      sevdeskCA.transactions = await SevdeskTransaction.getTransactionsForCheckingAccountId(sevdeskAccount, sevdeskCA.sevdeskId);
+      sevdeskCA.transactions = await SevdeskTransaction.getTransactionsForCheckingAccountId(
+        sevdeskAccount,
+        sevdeskCA.sevdeskId
+      );
       sevdeskCA.sevdeskAccount = sevdeskAccount;
       resultingCheckingAccounts.push(sevdeskCA);
     }
-    return resultingCheckingAccounts
-      
+    return resultingCheckingAccounts;
   }
 
   /**
    * gets a checkingAccount from sevdesk by name
    * @param sevdeskAccount
-   * @param checkingAccountNameArg 
+   * @param checkingAccountNameArg
    */
   static async getCheckingAccountByName(
     sevdeskAccount: SevdeskAccount,
@@ -35,8 +37,8 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
     let resultingCheckingAccount: SevdeskCheckingAccount;
     const checkingAccountsArray = await this.getAllCheckingAccounts(sevdeskAccount);
     resultingCheckingAccount = checkingAccountsArray.find(checkingAccount => {
-      return checkingAccount.name === checkingAccountNameArg
-    })
+      return checkingAccount.name === checkingAccountNameArg;
+    });
     return resultingCheckingAccount;
   }
 
@@ -66,20 +68,18 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
    * @param sevdeskAccountArg
    */
   async save(sevdeskAccountArg: SevdeskAccount = this.sevdeskAccount) {
-    if(!this.sevdeskAccount) {
+    if (!this.sevdeskAccount) {
       this.sevdeskAccount = sevdeskAccountArg;
     }
-
 
     // the main payload expected by sevdesk api
     let payload: any = {
       name: this.name,
       type: 'online',
       currency: this.currency
-    }
+    };
 
-
-    if(!this.sevdeskId) {
+    if (!this.sevdeskId) {
       const response = await sevdeskAccountArg.request('POST', '/CheckAccount', payload);
       this.sevdeskId = response.objects.id;
       // console.log(this.sevdeskId);
