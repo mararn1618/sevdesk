@@ -1,23 +1,20 @@
-# sevdesk
-
+# @mojoio/sevdesk
 mojoio integration package for sevdesk
 
-## Availabililty
-
-[![npm](https://mojoio.gitlab.io/assets/repo-button-npm.svg)](https://www.npmjs.com/package/@mojoio/sevdesk)
-[![git](https://mojoio.gitlab.io/assets/repo-button-git.svg)](https://GitLab.com/mojoio/sevdesk)
-[![git](https://mojoio.gitlab.io/assets/repo-button-mirror.svg)](https://github.com/mojoio/sevdesk)
-[![docs](https://mojoio.gitlab.io/assets/repo-button-docs.svg)](https://mojoio.gitlab.io/sevdesk/)
+## Availabililty and Links
+* [npmjs.org (npm package)](https://www.npmjs.com/package/@mojoio/sevdesk)
+* [gitlab.com (source)](https://gitlab.com/mojoio/sevdesk)
+* [github.com (source mirror)](https://github.com/mojoio/sevdesk)
+* [docs (typedoc)](https://mojoio.gitlab.io/sevdesk/)
 
 ## Status for master
-
-[![build status](https://GitLab.com/mojoio/sevdesk/badges/master/build.svg)](https://GitLab.com/mojoio/sevdesk/commits/master)
-[![coverage report](https://GitLab.com/mojoio/sevdesk/badges/master/coverage.svg)](https://GitLab.com/mojoio/sevdesk/commits/master)
+[![build status](https://gitlab.com/mojoio/sevdesk/badges/master/build.svg)](https://gitlab.com/mojoio/sevdesk/commits/master)
+[![coverage report](https://gitlab.com/mojoio/sevdesk/badges/master/coverage.svg)](https://gitlab.com/mojoio/sevdesk/commits/master)
 [![npm downloads per month](https://img.shields.io/npm/dm/@mojoio/sevdesk.svg)](https://www.npmjs.com/package/@mojoio/sevdesk)
 [![Known Vulnerabilities](https://snyk.io/test/npm/@mojoio/sevdesk/badge.svg)](https://snyk.io/test/npm/@mojoio/sevdesk)
-[![TypeScript](https://img.shields.io/badge/TypeScript-2.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
-[![node](https://img.shields.io/badge/node->=%206.x.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
-[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-prettier-7B1FA2.svg)](http://prettier.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript->=%203.x-blue.svg)](https://nodejs.org/dist/latest-v10.x/docs/api/)
+[![node](https://img.shields.io/badge/node->=%2010.x.x-blue.svg)](https://nodejs.org/dist/latest-v10.x/docs/api/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-prettier-ff69b4.svg)](https://prettier.io/)
 
 ## Usage
 
@@ -95,9 +92,9 @@ const run = async () => {
 run();
 ```
 
-For further information read the linked docs at the top of this README.
+For further information read the linked docs at the top of this readme.
 
 > MIT licensed | **&copy;** [Lossless GmbH](https://lossless.gmbh)
-> | By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy.html)
+| By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy.html)
 
-[![repo-footer](https://mojoio.gitlab.io/assets/repo-footer.svg)](https://mojo.io)
+[![repo-footer](https://mojoio.gitlab.io/assets/repo-footer.svg)](https://maintainedby.lossless.com)
