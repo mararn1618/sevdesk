@@ -108,8 +108,8 @@ export class SevdeskVoucher implements ISevdeskVoucher {
       voucher: {
         objectName: 'Voucher',
         mapAll: true,
-        voucherDate: plugins.moment(this.date).format(),
-        paymentDeadline: plugins.moment(this.date).format(),
+        voucherDate: plugins.smarttime.ExtendedDate.fromDate(this.date).toISOString(),
+        paymentDeadline: plugins.smarttime.ExtendedDate.fromDate(this.date).toISOString(),
         payDate: null,
         status: 100,
         comment: 'null',
@@ -140,11 +140,10 @@ export class SevdeskVoucher implements ISevdeskVoucher {
       (voucherFactoryPayload.voucher.supplier = {
         objectName: 'Contact',
         id: this.contactRef.sevdeskId
-      }),
-        (voucherFactoryPayload.supplierNameAtSave = this.contactRef.name);
+      })
+      voucherFactoryPayload.supplierNameAtSave = this.contactRef.name;
     }
-    console.log(voucherFactoryPayload);
-    console.log('jo');
+    // console.log(voucherFactoryPayload);
     await sevdeskAccountArg.request('POST', '/Voucher/Factory/saveVoucher', voucherFactoryPayload);
   }
 }

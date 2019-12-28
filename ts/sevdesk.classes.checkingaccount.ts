@@ -4,11 +4,11 @@ import { SevdeskTransaction } from './sevdesk.classes.transaction';
 import { ICheckingAccount, TCurrency, ITransaction } from '@tsclass/tsclass';
 
 export class SevdeskCheckingAccount implements ICheckingAccount {
-  static async getAllCheckingAccounts(sevdeskAccount: SevdeskAccount) {
+  public static async getAllCheckingAccounts(sevdeskAccount: SevdeskAccount) {
     const resultingCheckingAccounts: SevdeskCheckingAccount[] = [];
     const response = await sevdeskAccount.request('GET', '/CheckAccount');
 
-    for (let caApiObject of response.objects) {
+    for (const caApiObject of response.objects) {
       const sevdeskCA: SevdeskCheckingAccount = new SevdeskCheckingAccount({
         name: caApiObject.name,
         currency: caApiObject.currency,
@@ -30,7 +30,7 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
    * @param sevdeskAccount
    * @param checkingAccountNameArg
    */
-  static async getCheckingAccountByName(
+  public static async getCheckingAccountByName(
     sevdeskAccount: SevdeskAccount,
     checkingAccountNameArg: string
   ): Promise<SevdeskCheckingAccount> {
@@ -46,17 +46,17 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
   /**
    * the sevdeskAccount this is from
    */
-  sevdeskAccount: SevdeskAccount;
+  public sevdeskAccount: SevdeskAccount;
   /**
    * the id given by sevdesk
    */
-  sevdeskId: string;
-  name: string;
-  currency: TCurrency;
-  transactions: ITransaction[];
+  public sevdeskId: string;
+  public name: string;
+  public currency: TCurrency;
+  public transactions: ITransaction[];
 
   constructor(optionsArg: ICheckingAccount) {
-    for (let key in optionsArg) {
+    for (const key in optionsArg) {
       if (optionsArg[key] || optionsArg[key] === 0) {
         this[key] = optionsArg[key];
       }
@@ -67,13 +67,13 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
    * saves the checking account to a SevdeskAccount instance
    * @param sevdeskAccountArg
    */
-  async save(sevdeskAccountArg: SevdeskAccount = this.sevdeskAccount) {
+  public async save(sevdeskAccountArg: SevdeskAccount = this.sevdeskAccount) {
     if (!this.sevdeskAccount) {
       this.sevdeskAccount = sevdeskAccountArg;
     }
 
     // the main payload expected by sevdesk api
-    let payload: any = {
+    const payload: any = {
       name: this.name,
       type: 'online',
       currency: this.currency

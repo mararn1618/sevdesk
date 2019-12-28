@@ -1,7 +1,7 @@
 import { expect, tap } from '@pushrocks/tapbundle';
 import * as sevdesk from '../ts';
 
-import * as qenv from 'qenv';
+import * as qenv from '@pushrocks/qenv';
 
 const testQenv = new qenv.Qenv('./', './.nogit');
 
@@ -9,7 +9,7 @@ let testSevdeskAccount: sevdesk.SevdeskAccount;
 let sevDeskTestContact: sevdesk.SevdeskContact;
 
 tap.test('should create a sevdeskAccount', async () => {
-  testSevdeskAccount = new sevdesk.SevdeskAccount(process.env.SEVDESK_TOKEN);
+  testSevdeskAccount = new sevdesk.SevdeskAccount(testQenv.getEnvVarOnDemand('SEVDESK_TOKEN'));
   expect(testSevdeskAccount).to.be.instanceof(sevdesk.SevdeskAccount);
 });
 

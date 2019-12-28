@@ -12,21 +12,32 @@
     "build": "(tsbuild)"
   },
   "devDependencies": {
-    "@gitzone/tsbuild": "^2.1.8",
-    "@gitzone/tsrun": "^1.2.5",
-    "@pushrocks/tapbundle": "^3.0.9",
-    "qenv": "^1.1.7",
-    "tslint": "^5.15.0",
+    "@gitzone/tsbuild": "^2.1.17",
+    "@gitzone/tsrun": "^1.2.8",
+    "@pushrocks/qenv": "^4.0.6",
+    "@pushrocks/tapbundle": "^3.2.0",
+    "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0"
   },
   "dependencies": {
-    "@gitzone/tstest": "^1.0.20",
-    "@pushrocks/smartfile": "^7.0.2",
+    "@gitzone/tstest": "^1.0.28",
+    "@pushrocks/smartfile": "^7.0.6",
     "@pushrocks/smartfuzzy": "^1.1.1",
-    "@pushrocks/smartrequest": "^1.1.14",
-    "@tsclass/tsclass": "^2.0.0",
-    "@types/form-data": "^2.2.1",
-    "form-data": "^2.3.3",
-    "moment": "^2.24.0"
-  }
+    "@pushrocks/smartrequest": "^1.1.43",
+    "@pushrocks/smarttime": "^3.0.12",
+    "@tsclass/tsclass": "^2.0.13",
+    "@types/form-data": "^2.5.0",
+    "form-data": "^3.0.0"
+  },
+  "files": [
+    "ts/**/*",
+    "ts_web/**/*",
+    "dist/**/*",
+    "dist_web/**/*",
+    "dist_ts_web/**/*",
+    "assets/**/*",
+    "cli.js",
+    "npmextra.json",
+    "readme.md"
+  ]
 }

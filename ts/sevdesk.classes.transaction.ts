@@ -22,6 +22,8 @@ export class SevdeskTransaction implements ISevdeskTransaction {
     return [];
   }
 
+  name: string;
+
   date: Date;
   status: 'paid' | 'unpaid';
   description: string;
@@ -53,8 +55,8 @@ export class SevdeskTransaction implements ISevdeskTransaction {
       return '100';
     })();
     const payload = {
-      valueDate: plugins.moment(this.date).format(),
-      entryDate: plugins.moment(this.date).format(),
+      valueDate: plugins.smarttime.ExtendedDate.fromDate(this.date).toISOString(),
+      entryDate: plugins.smarttime.ExtendedDate.fromDate(this.date).toISOString(),
       amount: this.amount,
       paymtPurpose: this.description,
       payeePayerName: this.payeeName,
