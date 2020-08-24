@@ -65,18 +65,18 @@ export class SevdeskVoucher implements ISevdeskVoucher {
     }
   }
 
-  addExpenseItem(expenseItemArg: ISevdeskExpenseItem) {
+  public addExpenseItem(expenseItemArg: ISevdeskExpenseItem) {
     this.expenseItems.push(expenseItemArg);
   }
 
-  setContactRef(contactArg: SevdeskContact) {
+  public setContactRef(contactArg: SevdeskContact) {
     this.contactRef = contactArg;
   }
 
   /**
    * saves the expense to Sevdesk
    */
-  async save(sevdeskAccountArg: SevdeskAccount) {
+  public async save(sevdeskAccountArg: SevdeskAccount) {
     // lets try to save the pdf first
     let filenameForPayload: string = 'null';
 
