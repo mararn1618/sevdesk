@@ -53,6 +53,7 @@ const run = async () => {
     return contact.customerNumber === '1000';
   });
 
+  // lets update the name of a contact
   certainContact.name = 'My New Name';
   await certainContact.save();
 };
