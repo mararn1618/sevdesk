@@ -2,28 +2,24 @@ import * as plugins from './sevdesk.plugins';
 
 import { SevdeskAccount } from './sevdesk.classes.account';
 import {
-  IContact,
-  TContactSalutation,
-  IAddress,
-  TContactTitle,
-  TContactType
+  business,
 } from '@tsclass/tsclass';
 
-export interface ISevdeskContact extends IContact {
+export interface ISevdeskContact extends business.IContact {
   sevdeskId?: string;
 }
 
 import * as contactHelpers from './helpers/country';
 import { ENGINE_METHOD_DIGESTS } from 'constants';
 
-export class SevdeskContact implements IContact {
+export class SevdeskContact implements business.IContact {
   private static fromSevdeskApiObject(sevdeskApiObject: any): SevdeskContact {
     let sevdeskId: string;
-    let type: TContactType;
+    let type: business.TContactType;
     let name: string;
     let surname: string;
     let email: string;
-    let address: IAddress;
+    let address: business.IAddress;
     let description: string;
 
     // lets determine the contact type
@@ -45,7 +41,7 @@ export class SevdeskContact implements IContact {
       name: name,
       surname: surname,
       address: address,
-      description: description
+      description: description,
     });
 
     return sevdeskContactInstance;
@@ -78,17 +74,17 @@ export class SevdeskContact implements IContact {
   sevdeskId: string;
 
   // company or person
-  type: TContactType;
+  type: business.TContactType;
 
   // Basic DATA
-  title: TContactTitle;
-  salutation: TContactSalutation;
+  title: business.TContactTitle;
+  salutation: business.TContactSalutation;
   customerNumber: string;
   name: string;
   surname: string;
 
   // Contact Data
-  address: IAddress;
+  address: business.IAddress;
   phone: string;
   email: string;
 
@@ -114,7 +110,7 @@ export class SevdeskContact implements IContact {
         name: this.name,
         bankNumber: this.accountNumber,
         vatNumber: this.vatId,
-        description: this.description
+        description: this.description,
       };
     } else if (this.type === 'person') {
       payload = {
@@ -124,7 +120,7 @@ export class SevdeskContact implements IContact {
         customerNumber: this.customerNumber,
         academicTitle: this.title,
         bankNumber: this.accountNumber,
-        vatNumber: this.vatId
+        vatNumber: this.vatId,
       };
     }
 
@@ -133,8 +129,8 @@ export class SevdeskContact implements IContact {
       ...payload,
       category: {
         id: 3,
-        objectName: 'Category'
-      }
+        objectName: 'Category',
+      },
     };
 
     if (!this.sevdeskId) {
@@ -152,7 +148,7 @@ export class SevdeskContact implements IContact {
             country: await contactHelpers.getCountryIdByCountryName(
               sevdeskAccountArg,
               this.address.country
-            )
+            ),
             // category: 'main'
           }
         );
@@ -165,7 +161,7 @@ export class SevdeskContact implements IContact {
           `/Contact/${this.sevdeskId}/addEmail`,
           {
             key: 1,
-            value: this.email
+            value: this.email,
           }
         );
       }
@@ -177,7 +173,7 @@ export class SevdeskContact implements IContact {
           `/Contact/${this.sevdeskId}/addPhone`,
           {
             key: 1,
-            value: this.phone
+            value: this.phone,
           }
         );
       }

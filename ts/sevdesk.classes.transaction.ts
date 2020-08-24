@@ -1,10 +1,10 @@
 import { SevdeskAccount } from './sevdesk.classes.account';
-import { ITransaction } from '@tsclass/tsclass';
+import { finance } from '@tsclass/tsclass';
 import { SevdeskCheckingAccount } from './sevdesk.classes.checkingaccount';
 
 import * as plugins from './sevdesk.plugins';
 
-export interface ISevdeskTransaction extends ITransaction {
+export interface ISevdeskTransaction extends finance.ITransaction {
   sevdeskId?: string;
   sevdeskCheckingAccountId?: string;
   payeeName: string;
@@ -63,8 +63,8 @@ export class SevdeskTransaction implements ISevdeskTransaction {
       status: payloadStatus,
       checkAccount: {
         id: this.sevdeskCheckingAccountId,
-        objectName: 'CheckAccount'
-      }
+        objectName: 'CheckAccount',
+      },
     };
     // console.log(payload)
     const response = await sevdeskAccountArg.request('POST', '/CheckAccountTransaction', payload);

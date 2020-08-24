@@ -4,16 +4,16 @@ import { SevdeskContact } from './sevdesk.classes.contact';
 import { SevdeskAccountingType } from './sevdesk.classes.accountingtype';
 import * as interfaces from './sevdesk.interfaces';
 
-import { IVoucher, IExpenseItem } from '@tsclass/tsclass';
+import { finance } from '@tsclass/tsclass';
 
-export interface ISevdeskVoucher extends IVoucher {
+export interface ISevdeskVoucher extends finance.IVoucher {
   accountRef: SevdeskAccount;
   contactRef: SevdeskContact;
   expenseItems: ISevdeskExpenseItem[];
   voucherFilePath: string;
 }
 
-export interface ISevdeskExpenseItem extends IExpenseItem {
+export interface ISevdeskExpenseItem extends finance.IExpenseItem {
   accountingType: SevdeskAccountingType;
 }
 
@@ -99,7 +99,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
         sum: expense.amount,
         net: false,
         taxRate: expense.taxPercentage,
-        objectName: 'VoucherPos'
+        objectName: 'VoucherPos',
       });
     }
 
@@ -116,7 +116,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
         taxType: 'default',
         creditDebit: 'C',
         voucherType: 'VOU',
-        total: this.sum
+        total: this.sum,
       },
       filename: filenameForPayload,
       voucherPosSave: (() => {
@@ -127,20 +127,20 @@ export class SevdeskVoucher implements ISevdeskVoucher {
             amount: expenseItem.amount,
             taxPercentage: expenseItem.taxPercentage,
             asset: false,
-            description: expenseItem.description
+            description: expenseItem.description,
           });
           voucherPositions.push(voucherPos.getFormatedObjectForApi());
         }
         return voucherPositions;
       })(),
-      voucherPosDelete: 'null'
+      voucherPosDelete: 'null',
       // supplier: SevdeskContact.getContactByName(sevdeskAccountArg, 'hi')
     };
     if (this.contactRef) {
-      (voucherFactoryPayload.voucher.supplier = {
+      voucherFactoryPayload.voucher.supplier = {
         objectName: 'Contact',
-        id: this.contactRef.sevdeskId
-      })
+        id: this.contactRef.sevdeskId,
+      };
       voucherFactoryPayload.supplierNameAtSave = this.contactRef.name;
     }
     // console.log(voucherFactoryPayload);

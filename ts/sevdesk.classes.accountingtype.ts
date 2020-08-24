@@ -29,7 +29,7 @@ export class SevdeskAccountingType implements IAccountingType {
 
       const accountingTypeInstance = new SevdeskAccountingType({
         sevdeskId: accountingTypeApiObject.id,
-        englishIdentifier: normalizedTranslationCode
+        englishIdentifier: normalizedTranslationCode,
       });
       returnArray.push(accountingTypeInstance);
     }

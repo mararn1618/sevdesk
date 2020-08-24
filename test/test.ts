@@ -31,11 +31,11 @@ tap.test('should create contact with type person', async () => {
       postalCode: '10000',
       city: 'New York',
       country: 'Germany',
-      houseNumber: '6'
+      houseNumber: '6',
     },
     email: 'tony@starkindustries.com',
     phone: '+1 646 822 4567',
-    description: 'Toni is an entrepreneur and a natural Person'
+    description: 'Toni is an entrepreneur and a natural Person',
   });
   await sevDeskTestContact.save(testSevdeskAccount);
   console.log(sevDeskTestContact);
@@ -52,11 +52,11 @@ tap.test('should create contact with type company', async () => {
       postalCode: '10000',
       city: 'New York',
       country: 'Malta',
-      houseNumber: '7'
+      houseNumber: '7',
     },
     email: 'office@starkindustries.com',
     phone: '+1 646 822 4567',
-    description: 'Stark Technologies is a company'
+    description: 'Stark Technologies is a company',
   });
   await sevDeskTestContact.save(testSevdeskAccount);
 });
@@ -76,10 +76,10 @@ tap.test('should create a valid voucher with PDF file', async () => {
         amount: 119,
         asset: false,
         description: 'traveling with Deutsche Bahn',
-        taxPercentage: 19
-      }
+        taxPercentage: 19,
+      },
     ],
-    voucherFilePath: './test/testvoucher.pdf'
+    voucherFilePath: './test/testvoucher.pdf',
   });
   voucher.setContactRef(sevDeskTestContact);
   await voucher.save(testSevdeskAccount);
@@ -89,7 +89,7 @@ tap.skip.test('should create a valid checking account', async () => {
   const myCheckingAccount = new sevdesk.SevdeskCheckingAccount({
     name: 'Commerzbank',
     currency: 'EUR',
-    transactions: []
+    transactions: [],
   });
   await myCheckingAccount.save(testSevdeskAccount);
 });

@@ -1,9 +1,10 @@
 import { SevdeskAccount } from './sevdesk.classes.account';
 import { SevdeskTransaction, ISevdeskTransaction } from './sevdesk.classes.transaction';
 
-import { ICheckingAccount, TCurrency, ITransaction } from '@tsclass/tsclass';
+import { finance } from '@tsclass/tsclass';
+import { ICheckingAccount } from '@tsclass/tsclass/dist_ts/finance';
 
-export class SevdeskCheckingAccount implements ICheckingAccount {
+export class SevdeskCheckingAccount implements finance.ICheckingAccount {
   public static async getAllCheckingAccounts(sevdeskAccount: SevdeskAccount) {
     const resultingCheckingAccounts: SevdeskCheckingAccount[] = [];
     const response = await sevdeskAccount.request('GET', '/CheckAccount');
@@ -12,7 +13,7 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
       const sevdeskCA: SevdeskCheckingAccount = new SevdeskCheckingAccount({
         name: caApiObject.name,
         currency: caApiObject.currency,
-        transactions: null
+        transactions: null,
       });
       sevdeskCA.sevdeskId = caApiObject.id;
       sevdeskCA.transactions = await SevdeskTransaction.getTransactionsForCheckingAccountId(
@@ -36,7 +37,7 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
   ): Promise<SevdeskCheckingAccount> {
     let resultingCheckingAccount: SevdeskCheckingAccount;
     const checkingAccountsArray = await this.getAllCheckingAccounts(sevdeskAccount);
-    resultingCheckingAccount = checkingAccountsArray.find(checkingAccount => {
+    resultingCheckingAccount = checkingAccountsArray.find((checkingAccount) => {
       return checkingAccount.name === checkingAccountNameArg;
     });
     return resultingCheckingAccount;
@@ -52,8 +53,8 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
    */
   public sevdeskId: string;
   public name: string;
-  public currency: TCurrency;
-  public transactions: ITransaction[];
+  public currency: finance.TCurrency;
+  public transactions: finance.ITransaction[];
 
   constructor(optionsArg: ICheckingAccount) {
     for (const key in optionsArg) {
@@ -76,7 +77,7 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
     const payload: any = {
       name: this.name,
       type: 'online',
-      currency: this.currency
+      currency: this.currency,
     };
 
     if (!this.sevdeskId) {

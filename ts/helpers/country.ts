@@ -11,13 +11,13 @@ export const getCountryIdByCountryName = async (
   const response = await sevdeskAccount.request('GET', `/StaticCountry?limit=1000`);
   const countryArrray = response.objects;
 
-  const countryId = countryArrray.find(countryObjectArg => {
+  const countryId = countryArrray.find((countryObjectArg) => {
     return countryObjectArg.nameEn === countryNameArg;
   }).id;
   // console.log(countryId);
   return {
     id: countryId,
-    objectName: 'StaticCountry'
+    objectName: 'StaticCountry',
   };
 };
 

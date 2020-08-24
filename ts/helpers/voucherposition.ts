@@ -44,10 +44,10 @@ export class VoucherPosition implements IVoucherPosition {
       objectName: 'VoucherPos',
       accountingType: {
         id: this.accountingType.sevdeskId,
-        objectName: 'AccountingType'
+        objectName: 'AccountingType',
       },
       comment: this.description,
-      mapAll: 'true'
+      mapAll: 'true',
     };
     return returnObject;
   }

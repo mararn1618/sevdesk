@@ -34,15 +34,16 @@ export class SevdeskAccount {
         {
           method: 'POST',
           headers: {
-            Authorization: this.authToken
-          }
+            Authorization: this.authToken,
+          },
+          keepAlive: false
         },
         [
           {
             name: 'file.pdf',
             type: 'filePath',
-            payload: payloadArg
-          }
+            payload: payloadArg,
+          },
         ]
       );
       return response.body;
@@ -50,7 +51,7 @@ export class SevdeskAccount {
       let sevdeskHeaders = {
         authorization: this.authToken,
         accept: 'application/json',
-        'cache-control': 'no-cache'
+        'cache-control': 'no-cache',
       };
       if (payloadArg && payloadType === 'json') {
         sevdeskHeaders['Content-Type'] = 'application/json';
@@ -58,7 +59,8 @@ export class SevdeskAccount {
       const response = await plugins.smartrequest.request(`${this.apiDomain}${routeArg}`, {
         method: methodArg,
         headers: sevdeskHeaders,
-        requestBody: payloadArg
+        requestBody: payloadArg,
+        keepAlive: false
       });
       if (response.statusCode !== 200) {
         console.log(`Logging response body with status ${response.statusCode}:`);
