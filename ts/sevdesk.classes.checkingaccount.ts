@@ -5,22 +5,16 @@ import { finance } from '@tsclass/tsclass';
 import { ICheckingAccount } from '@tsclass/tsclass/dist_ts/finance';
 
 export class SevdeskCheckingAccount implements finance.ICheckingAccount {
-  public static async getAllCheckingAccounts(sevdeskAccount: SevdeskAccount) {
+  public static async getAllCheckingAccounts(sevdeskAccountArg: SevdeskAccount) {
     const resultingCheckingAccounts: SevdeskCheckingAccount[] = [];
-    const response = await sevdeskAccount.request('GET', '/CheckAccount');
+    const response = await sevdeskAccountArg.request('GET', '/CheckAccount');
 
     for (const caApiObject of response.objects) {
-      const sevdeskCA: SevdeskCheckingAccount = new SevdeskCheckingAccount({
+      const sevdeskCA: SevdeskCheckingAccount = new SevdeskCheckingAccount(sevdeskAccountArg, {
         name: caApiObject.name,
-        currency: caApiObject.currency,
-        transactions: null,
+        currency: caApiObject.currency
       });
       sevdeskCA.sevdeskId = caApiObject.id;
-      sevdeskCA.transactions = await SevdeskTransaction.getTransactionsForCheckingAccountId(
-        sevdeskAccount,
-        sevdeskCA.sevdeskId
-      );
-      sevdeskCA.sevdeskAccount = sevdeskAccount;
       resultingCheckingAccounts.push(sevdeskCA);
     }
     return resultingCheckingAccounts;
@@ -43,6 +37,20 @@ export class SevdeskCheckingAccount implements finance.ICheckingAccount {
     return resultingCheckingAccount;
   }
 
+  /**
+   * creates a checking account
+   * @param sevdeskAccountArg
+   * @param optionsArg
+   */
+  public static async createCheckingAccount(
+    sevdeskAccountArg: SevdeskAccount,
+    optionsArg: ICheckingAccount
+  ) {
+    const newCheckingAccount = new SevdeskCheckingAccount(sevdeskAccountArg, optionsArg);
+    await newCheckingAccount.save();
+    return newCheckingAccount;
+  }
+
   // Properties
   /**
    * the sevdeskAccount this is from
@@ -54,36 +62,28 @@ export class SevdeskCheckingAccount implements finance.ICheckingAccount {
   public sevdeskId: string;
   public name: string;
   public currency: finance.TCurrency;
-  public transactions: finance.ITransaction[];
 
-  constructor(optionsArg: ICheckingAccount) {
-    for (const key in optionsArg) {
-      if (optionsArg[key] || optionsArg[key] === 0) {
-        this[key] = optionsArg[key];
-      }
-    }
+  constructor(sevdeskAccountArg: SevdeskAccount, optionsArg: ICheckingAccount) {
+    this.sevdeskAccount = sevdeskAccountArg;
+    Object.assign(this, optionsArg);
   }
 
   /**
    * saves the checking account to a SevdeskAccount instance
    * @param sevdeskAccountArg
    */
-  public async save(sevdeskAccountArg: SevdeskAccount = this.sevdeskAccount) {
-    if (!this.sevdeskAccount) {
-      this.sevdeskAccount = sevdeskAccountArg;
-    }
-
+  public async save() {
     // the main payload expected by sevdesk api
     const payload: any = {
       name: this.name,
       type: 'online',
+      importType: 'CSV',
       currency: this.currency,
     };
 
     if (!this.sevdeskId) {
-      const response = await sevdeskAccountArg.request('POST', '/CheckAccount', payload);
+      const response = await await this.sevdeskAccount.request('POST', '/CheckAccount', payload);
       this.sevdeskId = response.objects.id;
-      // console.log(this.sevdeskId);
     } else {
       // TODO: if there is a sevdeskId assigned rather update this checkingaccount instead
     }
@@ -93,7 +93,7 @@ export class SevdeskCheckingAccount implements finance.ICheckingAccount {
    * creates a transaction on this account
    */
   public async createTransaction(optionsArg: ISevdeskTransaction) {
-    const sevdeskTransaction = new SevdeskTransaction(optionsArg);
-    await sevdeskTransaction.save(this.sevdeskAccount);
+    const sevdeskTransaction = new SevdeskTransaction(this, optionsArg);
+    await sevdeskTransaction.save();
   }
 }

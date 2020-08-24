@@ -1,6 +1,7 @@
 import * as plugins from './sevdesk.plugins';
 import { SevdeskCheckingAccount } from './sevdesk.classes.checkingaccount';
 import { SevdeskContact } from './sevdesk.classes.contact';
+import { ICheckingAccount } from '@tsclass/tsclass/dist_ts/finance';
 
 export class SevdeskAccount {
   /**
@@ -16,6 +17,10 @@ export class SevdeskAccount {
 
   async getCheckingAccounts() {
     return await SevdeskCheckingAccount.getAllCheckingAccounts(this);
+  }
+
+  public async createCheckingAccount(optionsArg: ICheckingAccount) {
+    return await SevdeskCheckingAccount.createCheckingAccount(this, optionsArg);
   }
 
   async getContacts() {

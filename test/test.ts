@@ -86,12 +86,26 @@ tap.test('should create a valid voucher with PDF file', async () => {
 });
 
 tap.skip.test('should create a valid checking account', async () => {
-  const myCheckingAccount = new sevdesk.SevdeskCheckingAccount({
-    name: 'Commerzbank',
+  const myCheckingAccount = testSevdeskAccount.createCheckingAccount({
     currency: 'EUR',
-    transactions: [],
+    name: 'SomeAccount'
   });
-  await myCheckingAccount.save(testSevdeskAccount);
+});
+
+tap.test('should create a valid checking account and store a transaction', async () => {
+  const myCheckingAccount = await testSevdeskAccount.createCheckingAccount({
+    name: 'sevdeskmodule',
+    currency: 'EUR'
+  });
+  myCheckingAccount.createTransaction({
+    amount: 100,
+    date: new Date(),
+    description: 'an awesome transaction',
+    name: 'some name',
+    payeeName: 'some name',
+    status: 'unpaid'
+  });
+
 });
 
 tap.skip.test('should get transactions for an account', async () => {

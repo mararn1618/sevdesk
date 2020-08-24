@@ -6,22 +6,27 @@ import * as plugins from './sevdesk.plugins';
 
 export interface ISevdeskTransaction extends finance.ITransaction {
   sevdeskId?: string;
-  sevdeskCheckingAccountId?: string;
   payeeName: string;
   status: 'paid' | 'unpaid';
 }
 
 export class SevdeskTransaction implements ISevdeskTransaction {
-  public static async getTransactionsForCheckingAccountId(
-    sevdeskAccountArg: SevdeskAccount,
-    checkingAccountId: string
+  public static async getTransactionsForCheckingAccount(
+    sevdeskCheckingAccountArg: SevdeskCheckingAccount
   ): Promise<SevdeskTransaction[]> {
-    const response = await sevdeskAccountArg.request('GET', '/CheckAccountTransaction');
+    const response = await sevdeskCheckingAccountArg.sevdeskAccount.request(
+      'GET',
+      '/CheckAccountTransaction'
+    );
     const apiObjectArray = response.objects;
-    // console.log(apiObjectArray);
-    return [];
+    const returnArray: SevdeskTransaction[] = [];
+    for (const transactionData of apiObjectArray) {
+      returnArray.push(new SevdeskTransaction(sevdeskCheckingAccountArg, transactionData));
+    }
+    return returnArray;
   }
 
+  public checkingAccount: SevdeskCheckingAccount;
   public name: string;
 
   public date: Date;
@@ -30,24 +35,20 @@ export class SevdeskTransaction implements ISevdeskTransaction {
   public amount: number;
   public payeeName: string;
   public sevdeskId: string;
-  public sevdeskCheckingAccountId: string;
 
   /**
    * the constructor for SevdeskTransaction
    * @param optionsArg
    */
-  constructor(optionsArg: ISevdeskTransaction) {
-    for (const key in optionsArg) {
-      if (optionsArg[key] || optionsArg[key] === 0) {
-        this[key] = optionsArg[key];
-      }
-    }
+  constructor(checkingAccountArg: SevdeskCheckingAccount, optionsArg: ISevdeskTransaction) {
+    this.checkingAccount = checkingAccountArg;
+    Object.assign(this, optionsArg);
   }
 
   /**
    * save the SevdeskTransaction to a SevdeskAccount
    */
-  public async save(sevdeskAccountArg: SevdeskAccount) {
+  public async save() {
     const payloadStatus = (() => {
       if (this.status === 'paid') {
         return '200';
@@ -62,12 +63,16 @@ export class SevdeskTransaction implements ISevdeskTransaction {
       payeePayerName: this.payeeName,
       status: payloadStatus,
       checkAccount: {
-        id: this.sevdeskCheckingAccountId,
+        id: this.checkingAccount.sevdeskId,
         objectName: 'CheckAccount',
       },
     };
     // console.log(payload)
-    const response = await sevdeskAccountArg.request('POST', '/CheckAccountTransaction', payload);
-    this.sevdeskId = response.id;
+    const response = await this.checkingAccount.sevdeskAccount.request(
+      'POST',
+      '/CheckAccountTransaction',
+      payload
+    );
+    this.sevdeskId = response.objects.id;
   }
 }
