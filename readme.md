@@ -70,13 +70,13 @@ const run = async () => {
   const sevdeskCheckingAccounts: sevdesk.SevdeskCheckingAccount[] = await sevdeskAccount.getCheckingAccounts();
 
   // lets create a new checking account
-  await sevdeskAccount.createCheckingAccount({
+  const myCommerzbankAccount = await sevdeskAccount.createCheckingAccount({
     currency: 'EUR',
     name: 'commerzbank',
     transactions: [],
   });
 
-  const myTransaction = new sevdesk.SevdeskTransaction({
+  const myNewTransaction = await myCommerzbank.createTransaction({
     sevdeskCheckingAccountId: sevdeskCheckingAccount.sevdeskId,
     payeeName: 'Max Mustermann',
     amount: 100,

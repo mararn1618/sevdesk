@@ -95,5 +95,6 @@ export class SevdeskCheckingAccount implements finance.ICheckingAccount {
   public async createTransaction(optionsArg: ISevdeskTransaction) {
     const sevdeskTransaction = new SevdeskTransaction(this, optionsArg);
     await sevdeskTransaction.save();
+    return sevdeskTransaction;
   }
 }
