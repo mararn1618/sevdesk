@@ -1,27 +1,29 @@
 # @mojoio/sevdesk
+
 mojoio integration package for sevdesk
 
 ## Availabililty and Links
-* [npmjs.org (npm package)](https://www.npmjs.com/package/@mojoio/sevdesk)
-* [gitlab.com (source)](https://gitlab.com/mojoio/sevdesk)
-* [github.com (source mirror)](https://github.com/mojoio/sevdesk)
-* [docs (typedoc)](https://mojoio.gitlab.io/sevdesk/)
+
+- [npmjs.org (npm package)](https://www.npmjs.com/package/@mojoio/sevdesk)
+- [gitlab.com (source)](https://gitlab.com/mojoio/sevdesk)
+- [github.com (source mirror)](https://github.com/mojoio/sevdesk)
+- [docs (typedoc)](https://mojoio.gitlab.io/sevdesk/)
 
 ## Status for master
 
-Status Category | Status Badge
--- | --
-GitLab Pipelines | [![pipeline status](https://gitlab.com/mojoio/sevdesk/badges/master/pipeline.svg)](https://lossless.cloud)
-GitLab Pipline Test Coverage | [![coverage report](https://gitlab.com/mojoio/sevdesk/badges/master/coverage.svg)](https://lossless.cloud)
-npm | [![npm downloads per month](https://badgen.net/npm/dy/@mojoio/sevdesk)](https://lossless.cloud)
-Snyk | [![Known Vulnerabilities](https://badgen.net/snyk/mojoio/sevdesk)](https://lossless.cloud)
-TypeScript Support | [![TypeScript](https://badgen.net/badge/TypeScript/>=%203.x/blue?icon=typescript)](https://lossless.cloud)
-node Support | [![node](https://img.shields.io/badge/node->=%2010.x.x-blue.svg)](https://nodejs.org/dist/latest-v10.x/docs/api/)
-Code Style | [![Code Style](https://badgen.net/badge/style/prettier/purple)](https://lossless.cloud)
-PackagePhobia (total standalone install weight) | [![PackagePhobia](https://badgen.net/packagephobia/install/@mojoio/sevdesk)](https://lossless.cloud)
-PackagePhobia (package size on registry) | [![PackagePhobia](https://badgen.net/packagephobia/publish/@mojoio/sevdesk)](https://lossless.cloud)
-BundlePhobia (total size when bundled) | [![BundlePhobia](https://badgen.net/bundlephobia/minzip/@mojoio/sevdesk)](https://lossless.cloud)
-Platform support | [![Supports Windows 10](https://badgen.net/badge/supports%20Windows%2010/yes/green?icon=windows)](https://lossless.cloud) [![Supports Mac OS X](https://badgen.net/badge/supports%20Mac%20OS%20X/yes/green?icon=apple)](https://lossless.cloud)
+| Status Category                                 | Status Badge                                                                                                                                                                                                                                    |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| GitLab Pipelines                                | [![pipeline status](https://gitlab.com/mojoio/sevdesk/badges/master/pipeline.svg)](https://lossless.cloud)                                                                                                                                      |
+| GitLab Pipline Test Coverage                    | [![coverage report](https://gitlab.com/mojoio/sevdesk/badges/master/coverage.svg)](https://lossless.cloud)                                                                                                                                      |
+| npm                                             | [![npm downloads per month](https://badgen.net/npm/dy/@mojoio/sevdesk)](https://lossless.cloud)                                                                                                                                                 |
+| Snyk                                            | [![Known Vulnerabilities](https://badgen.net/snyk/mojoio/sevdesk)](https://lossless.cloud)                                                                                                                                                      |
+| TypeScript Support                              | [![TypeScript](https://badgen.net/badge/TypeScript/>=%203.x/blue?icon=typescript)](https://lossless.cloud)                                                                                                                                      |
+| node Support                                    | [![node](https://img.shields.io/badge/node->=%2010.x.x-blue.svg)](https://nodejs.org/dist/latest-v10.x/docs/api/)                                                                                                                               |
+| Code Style                                      | [![Code Style](https://badgen.net/badge/style/prettier/purple)](https://lossless.cloud)                                                                                                                                                         |
+| PackagePhobia (total standalone install weight) | [![PackagePhobia](https://badgen.net/packagephobia/install/@mojoio/sevdesk)](https://lossless.cloud)                                                                                                                                            |
+| PackagePhobia (package size on registry)        | [![PackagePhobia](https://badgen.net/packagephobia/publish/@mojoio/sevdesk)](https://lossless.cloud)                                                                                                                                            |
+| BundlePhobia (total size when bundled)          | [![BundlePhobia](https://badgen.net/bundlephobia/minzip/@mojoio/sevdesk)](https://lossless.cloud)                                                                                                                                               |
+| Platform support                                | [![Supports Windows 10](https://badgen.net/badge/supports%20Windows%2010/yes/green?icon=windows)](https://lossless.cloud) [![Supports Mac OS X](https://badgen.net/badge/supports%20Mac%20OS%20X/yes/green?icon=apple)](https://lossless.cloud) |
 
 ## Usage
 
@@ -41,23 +43,20 @@ Typings and constructor options follow the world view of @tsclass/tsclass, a pac
 - SevdeskCheckingAccount -> handles CheckingAccounts within sevdesk
 - SevdeskTransaction -> handles Transactions within sevdesk
 
-Every class exposes static functions to **retrieve information from sevdesk**.
-Every instance of an class exposes a .save(myAccountInstanceHere) function to **store information back to sevdesk**.
-
 ```typescript
 import * as sevdesk from '@mojoio/sevdesk';
 
-const sevdeskAccount = new sevdesk.SevdeskAccount('myTokenString1234567890');
-const contacts: sevdesk.SevdeskContact[] = sevdesk.SevdeskContact.getContacts(sevdeskAccount);
-const certainContact = contacts.find((contact) => {
-  return contact.customerNumber === '1000';
-});
+const run = async () => {
+  const sevdeskAccount = new sevdesk.SevdeskAccount('myTokenString1234567890');
+  const contacts: sevdesk.SevdeskContact[] = await sevdeskAccount.getContacts();
+  const certainContact = contacts.find((contact) => {
+    return contact.customerNumber === '1000';
+  });
 
-certainContact.name = 'My New Name';
-
-// note:
-// If you want to transfer the contact to another account, simply instantiate a second account :)
-certainContact.save(sevdeskAccount);
+  certainContact.name = 'My New Name';
+  await certainContact.save();
+};
+run();
 ```
 
 A simple example to create Transactions:
@@ -67,22 +66,14 @@ import * as sevdesk from '@mojoio/sevdesk';
 
 const run = async () => {
   const sevdeskAccount = new sevdesk.SevdeskAccount('myTokenString1234567890');
-  let sevdeskCheckingAccount = await sevdesk.SevdeskCheckingAccount.getCheckingAccountByName(
-    sevdeskAccount,
-    'commerzbank'
-  );
+  const sevdeskCheckingAccounts: sevdesk.SevdeskCheckingAccount[] = await sevdeskAccount.getCheckingAccounts();
 
-  if (!sevdeskCheckingAccount) {
-    sevdeskCheckingAccount = new sevdesk.SevdeskCheckingAccount({
-      currency: 'EUR',
-      name: 'commerzbank',
-      transactions: [],
-    });
-
-    // NOTE: .save() will get the sevdeskId and store it in the instance at .sevdeskId !
-    // this is the default behaviour for all classes that can be `.save()`ed to sevdesk !
-    await sevdeskCheckingAccount.save(sevdeskAccount);
-  }
+  // lets create a new checking account
+  await sevdeskAccount.createCheckingAccount({
+    currency: 'EUR',
+    name: 'commerzbank',
+    transactions: [],
+  });
 
   const myTransaction = new sevdesk.SevdeskTransaction({
     sevdeskCheckingAccountId: sevdeskCheckingAccount.sevdeskId,
@@ -106,6 +97,6 @@ We are always happy for code contributions. If you are not the code contributing
 For further information read the linked docs at the top of this readme.
 
 > MIT licensed | **&copy;** [Lossless GmbH](https://lossless.gmbh)
-| By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy)
+> | By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy)
 
 [![repo-footer](https://lossless.gitlab.io/publicrelations/repofooter.svg)](https://maintainedby.lossless.com)
