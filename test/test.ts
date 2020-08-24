@@ -105,7 +105,6 @@ tap.test('should create a valid checking account and store a transaction', async
     payeeName: 'some name',
     status: 'unpaid'
   });
-
 });
 
 tap.skip.test('should get transactions for an account', async () => {

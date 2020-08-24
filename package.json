@@ -24,9 +24,9 @@
     "@gitzone/tstest": "^1.0.44",
     "@pushrocks/smartfile": "^8.0.0",
     "@pushrocks/smartfuzzy": "^1.1.1",
-    "@pushrocks/smartrequest": "^1.1.47",
+    "@pushrocks/smartrequest": "^1.1.49",
     "@pushrocks/smarttime": "^3.0.24",
-    "@tsclass/tsclass": "^3.0.24",
+    "@tsclass/tsclass": "^3.0.25",
     "@types/form-data": "^2.5.0",
     "form-data": "^3.0.0"
   },
