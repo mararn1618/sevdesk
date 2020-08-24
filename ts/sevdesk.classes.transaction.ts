@@ -12,7 +12,7 @@ export interface ISevdeskTransaction extends ITransaction {
 }
 
 export class SevdeskTransaction implements ISevdeskTransaction {
-  static async getTransactionsForCheckingAccountId(
+  public static async getTransactionsForCheckingAccountId(
     sevdeskAccountArg: SevdeskAccount,
     checkingAccountId: string
   ): Promise<SevdeskTransaction[]> {
@@ -22,22 +22,22 @@ export class SevdeskTransaction implements ISevdeskTransaction {
     return [];
   }
 
-  name: string;
+  public name: string;
 
-  date: Date;
-  status: 'paid' | 'unpaid';
-  description: string;
-  amount: number;
-  payeeName: string;
-  sevdeskId: string;
-  sevdeskCheckingAccountId: string;
+  public date: Date;
+  public status: 'paid' | 'unpaid';
+  public description: string;
+  public amount: number;
+  public payeeName: string;
+  public sevdeskId: string;
+  public sevdeskCheckingAccountId: string;
 
   /**
    * the constructor for SevdeskTransaction
    * @param optionsArg
    */
   constructor(optionsArg: ISevdeskTransaction) {
-    for (let key in optionsArg) {
+    for (const key in optionsArg) {
       if (optionsArg[key] || optionsArg[key] === 0) {
         this[key] = optionsArg[key];
       }
@@ -47,7 +47,7 @@ export class SevdeskTransaction implements ISevdeskTransaction {
   /**
    * save the SevdeskTransaction to a SevdeskAccount
    */
-  async save(sevdeskAccountArg: SevdeskAccount) {
+  public async save(sevdeskAccountArg: SevdeskAccount) {
     const payloadStatus = (() => {
       if (this.status === 'paid') {
         return '200';
@@ -67,6 +67,7 @@ export class SevdeskTransaction implements ISevdeskTransaction {
       }
     };
     // console.log(payload)
-    await sevdeskAccountArg.request('POST', '/CheckAccountTransaction', payload);
+    const response = await sevdeskAccountArg.request('POST', '/CheckAccountTransaction', payload);
+    this.sevdeskId = response.id;
   }
 }

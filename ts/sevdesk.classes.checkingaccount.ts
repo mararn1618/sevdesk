@@ -1,5 +1,5 @@
 import { SevdeskAccount } from './sevdesk.classes.account';
-import { SevdeskTransaction } from './sevdesk.classes.transaction';
+import { SevdeskTransaction, ISevdeskTransaction } from './sevdesk.classes.transaction';
 
 import { ICheckingAccount, TCurrency, ITransaction } from '@tsclass/tsclass';
 
@@ -86,5 +86,13 @@ export class SevdeskCheckingAccount implements ICheckingAccount {
     } else {
       // TODO: if there is a sevdeskId assigned rather update this checkingaccount instead
     }
+  }
+
+  /**
+   * creates a transaction on this account
+   */
+  public async createTransaction(optionsArg: ISevdeskTransaction) {
+    const sevdeskTransaction = new SevdeskTransaction(optionsArg);
+    await sevdeskTransaction.save(this.sevdeskAccount);
   }
 }
