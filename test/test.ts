@@ -20,7 +20,7 @@ tap.test('should get all available booking types', async () => {
 });
 
 tap.test('should create contact with type person', async () => {
-  sevDeskTestContact = new sevdesk.SevdeskContact({
+  sevDeskTestContact = await testSevdeskAccount.createContact({
     title: 'Doctor',
     customerNumber: '1000',
     name: 'Toni',
@@ -37,13 +37,13 @@ tap.test('should create contact with type person', async () => {
     phone: '+1 646 822 4567',
     description: 'Toni is an entrepreneur and a natural Person',
   });
-  await sevDeskTestContact.save(testSevdeskAccount);
+  await sevDeskTestContact.save();
   console.log(sevDeskTestContact);
   expect(sevDeskTestContact).to.haveOwnProperty('sevdeskId');
 });
 
 tap.test('should create contact with type company', async () => {
-  sevDeskTestContact = new sevdesk.SevdeskContact({
+  sevDeskTestContact = await testSevdeskAccount.createContact({
     customerNumber: '1001',
     name: 'Start Technologies',
     type: 'company',
@@ -58,7 +58,6 @@ tap.test('should create contact with type company', async () => {
     phone: '+1 646 822 4567',
     description: 'Stark Technologies is a company',
   });
-  await sevDeskTestContact.save(testSevdeskAccount);
 });
 
 tap.test('should create a valid voucher with PDF file', async () => {

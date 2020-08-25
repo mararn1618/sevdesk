@@ -1,6 +1,6 @@
 import * as plugins from './sevdesk.plugins';
 import { SevdeskCheckingAccount } from './sevdesk.classes.checkingaccount';
-import { SevdeskContact } from './sevdesk.classes.contact';
+import { SevdeskContact, ISevdeskContactOptions } from './sevdesk.classes.contact';
 import { ICheckingAccount } from '@tsclass/tsclass/dist_ts/finance';
 import { SevdeskVoucher, ISevdeskVoucherOptions } from './sevdesk.classes.voucher';
 
@@ -26,6 +26,10 @@ export class SevdeskAccount {
 
   public async getContacts() {
     return await SevdeskContact.getAllContacts(this);
+  }
+
+  public async createContact(optionsArg: ISevdeskContactOptions) {
+    return await SevdeskContact.createSevdeskTransaction(this, optionsArg);
   }
 
   public async createVoucher(optionsArg: ISevdeskVoucherOptions) {
