@@ -17,23 +17,23 @@ export class SevdeskAccount {
   }
 
   async getCheckingAccounts() {
-    return await SevdeskCheckingAccount.getAllCheckingAccounts(this);
+    return SevdeskCheckingAccount.getAllCheckingAccounts(this);
   }
 
   public async createCheckingAccount(optionsArg: ICheckingAccount) {
-    return await SevdeskCheckingAccount.createCheckingAccount(this, optionsArg);
+    return SevdeskCheckingAccount.createCheckingAccount(this, optionsArg);
   }
 
   public async getContacts() {
-    return await SevdeskContact.getAllContacts(this);
+    return SevdeskContact.getAllContacts(this);
   }
 
   public async createContact(optionsArg: ISevdeskContactOptions) {
-    return await SevdeskContact.createSevdeskTransaction(this, optionsArg);
+    return SevdeskContact.createSevdeskTransaction(this, optionsArg);
   }
 
   public async createVoucher(optionsArg: ISevdeskVoucherOptions) {
-    return await SevdeskVoucher.createVoucher(this, optionsArg);
+    return SevdeskVoucher.createVoucher(this, optionsArg);
   } 
 
   async request(
@@ -62,7 +62,7 @@ export class SevdeskAccount {
       );
       return response.body;
     } else {
-      let sevdeskHeaders = {
+      const sevdeskHeaders = {
         authorization: this.authToken,
         accept: 'application/json',
         'cache-control': 'no-cache',
