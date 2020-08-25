@@ -62,11 +62,10 @@ tap.test('should create contact with type company', async () => {
 });
 
 tap.test('should create a valid voucher with PDF file', async () => {
-  const voucher = new sevdesk.SevdeskVoucher({
+  const voucher = await testSevdeskAccount.createVoucher({
     date: new Date(),
     description: 'a cool expense',
-    accountRef: null,
-    contactRef: null,
+    contactRef: sevDeskTestContact,
     expenseItems: [
       {
         accountingType: await sevdesk.SevdeskAccountingType.getByFuzzyName(
@@ -81,8 +80,6 @@ tap.test('should create a valid voucher with PDF file', async () => {
     ],
     voucherFilePath: './test/testvoucher.pdf',
   });
-  voucher.setContactRef(sevDeskTestContact);
-  await voucher.save(testSevdeskAccount);
 });
 
 tap.skip.test('should create a valid checking account', async () => {

@@ -6,8 +6,7 @@ import * as interfaces from './sevdesk.interfaces';
 
 import { finance } from '@tsclass/tsclass';
 
-export interface ISevdeskVoucher extends finance.IVoucher {
-  accountRef: SevdeskAccount;
+export interface ISevdeskVoucherOptions extends finance.IVoucher {
   contactRef: SevdeskContact;
   expenseItems: ISevdeskExpenseItem[];
   voucherFilePath: string;
@@ -20,7 +19,17 @@ export interface ISevdeskExpenseItem extends finance.IExpenseItem {
 import * as fs from 'fs';
 import { VoucherPosition } from './helpers/voucherposition';
 
-export class SevdeskVoucher implements ISevdeskVoucher {
+export class SevdeskVoucher implements ISevdeskVoucherOptions {
+  // STATIC
+  public static async createVoucher(sevdeskAccountRef: SevdeskAccount, voucherOptionsArg: ISevdeskVoucherOptions) {
+    const voucher = new SevdeskVoucher(sevdeskAccountRef, voucherOptionsArg);
+    await voucher.save();
+    return voucher;
+  }
+
+  // INSTANCE
+  public sevdeskAccountRef: SevdeskAccount;
+  
   /**
    * expense items describe
    */
@@ -35,11 +44,6 @@ export class SevdeskVoucher implements ISevdeskVoucher {
    * contactRef
    */
   contactRef: SevdeskContact;
-
-  /**
-   *
-   */
-  accountRef: SevdeskAccount;
   accountingType: interfaces.TAvailableAccountingType;
   description: string;
   date: Date;
@@ -48,7 +52,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
   // getters
   get sum() {
     let sum = 0;
-    for (let expense of this.expenseItems) {
+    for (const expense of this.expenseItems) {
       sum += expense.amount;
     }
     return sum;
@@ -57,32 +61,25 @@ export class SevdeskVoucher implements ISevdeskVoucher {
   /**
    * the contructor for an Expense
    */
-  constructor(expenseObjectArg: ISevdeskVoucher) {
-    for (let key in expenseObjectArg) {
-      if (expenseObjectArg[key] || expenseObjectArg[key] === 0) {
-        this[key] = expenseObjectArg[key];
-      }
-    }
+  constructor(sevdeskAccountRefArg: SevdeskAccount, expenseObjectArg: ISevdeskVoucherOptions) {
+    this.sevdeskAccountRef = sevdeskAccountRefArg;
+    Object.assign(this, expenseObjectArg);
   }
 
   public addExpenseItem(expenseItemArg: ISevdeskExpenseItem) {
     this.expenseItems.push(expenseItemArg);
   }
 
-  public setContactRef(contactArg: SevdeskContact) {
-    this.contactRef = contactArg;
-  }
-
   /**
    * saves the expense to Sevdesk
    */
-  public async save(sevdeskAccountArg: SevdeskAccount) {
+  public async save() {
     // lets try to save the pdf first
     let filenameForPayload: string = 'null';
 
     if (this.voucherFilePath) {
       console.log(this.voucherFilePath);
-      const response = await sevdeskAccountArg.request(
+      const response = await this.sevdeskAccountRef.request(
         'POST',
         '/Voucher/Factory/uploadTempFile',
         this.voucherFilePath,
@@ -94,7 +91,7 @@ export class SevdeskVoucher implements ISevdeskVoucher {
 
     // lets use the voucher factory
     const voucherPositions = [];
-    for (let expense of this.expenseItems) {
+    for (const expense of this.expenseItems) {
       voucherPositions.push({
         sum: expense.amount,
         net: false,
@@ -144,6 +141,6 @@ export class SevdeskVoucher implements ISevdeskVoucher {
       voucherFactoryPayload.supplierNameAtSave = this.contactRef.name;
     }
     // console.log(voucherFactoryPayload);
-    await sevdeskAccountArg.request('POST', '/Voucher/Factory/saveVoucher', voucherFactoryPayload);
+    await this.sevdeskAccountRef.request('POST', '/Voucher/Factory/saveVoucher', voucherFactoryPayload);
   }
 }

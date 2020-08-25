@@ -2,6 +2,7 @@ import * as plugins from './sevdesk.plugins';
 import { SevdeskCheckingAccount } from './sevdesk.classes.checkingaccount';
 import { SevdeskContact } from './sevdesk.classes.contact';
 import { ICheckingAccount } from '@tsclass/tsclass/dist_ts/finance';
+import { SevdeskVoucher, ISevdeskVoucherOptions } from './sevdesk.classes.voucher';
 
 export class SevdeskAccount {
   /**
@@ -23,9 +24,13 @@ export class SevdeskAccount {
     return await SevdeskCheckingAccount.createCheckingAccount(this, optionsArg);
   }
 
-  async getContacts() {
+  public async getContacts() {
     return await SevdeskContact.getAllContacts(this);
   }
+
+  public async createVoucher(optionsArg: ISevdeskVoucherOptions) {
+    return await SevdeskVoucher.createVoucher(this, optionsArg);
+  } 
 
   async request(
     methodArg: 'POST' | 'GET',
