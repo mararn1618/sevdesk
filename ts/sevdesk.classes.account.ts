@@ -76,7 +76,7 @@ export class SevdeskAccount {
         requestBody: payloadArg,
         keepAlive: false
       });
-      if (response.statusCode !== 200) {
+      if (response.statusCode > 299) {
         console.log(`Logging response body with status ${response.statusCode}:`);
         console.log(response.body);
       }
