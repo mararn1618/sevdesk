@@ -76,16 +76,13 @@ const run = async () => {
     transactions: [],
   });
 
-  const myNewTransaction = await myCommerzbank.createTransaction({
-    sevdeskCheckingAccountId: sevdeskCheckingAccount.sevdeskId,
+  const myNewTransaction = await myCommerzbankAccount.createTransaction({
     payeeName: 'Max Mustermann',
     amount: 100,
     date: new Date(),
     status: 'unpaid',
     description: 'a cool description',
   });
-
-  await myTransaction.save(sevdeskAccount);
 };
 
 run();
